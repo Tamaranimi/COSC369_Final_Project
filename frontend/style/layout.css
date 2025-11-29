@@ -98,15 +98,64 @@
 .chat-history-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding-top: 4px;
 }
 
-.history-item {
-  width: 100%;
-  justify-content: flex-start; /* text left-aligned */
-  font-size: 13px;
+/* Entire row is the hover area */
+.history-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.history-row:hover {
+  background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+}
+
+.history-row.active {
+  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+/* Text label inside row */
+.history-label {
+  flex: 1;
+  background: none;
+  border: none;
+  font-size: 13px;
+  text-align: left;
+  color: var(--text-secondary);
+  padding: 0;
+  cursor: inherit;
+}
+
+.history-row.active .history-label {
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+/* Trash icon */
+.delete-history-btn {
+  border: none;
+  background: transparent;
+  padding: 3px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-history-btn .material-icons {
+  font-size: 18px;
+  color: color-mix(in srgb, var(--text-secondary) 70%, transparent);
+}
+
+/* When row hovered, icon also feels "inside" hover */
+.history-row:hover .delete-history-btn .material-icons {
+  color: var(--danger-hover);
 }
 
 .empty-history {

@@ -443,23 +443,69 @@ async function loadChatHistory() {
     }
 
     conversations.forEach((c) => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.classList.add("nav-item", "history-item");
-      btn.textContent = c.title || "Untitled chat";
-      btn.dataset.id = c.id;
+      // Entire clickable row (handles hover bg)
+      const row = document.createElement("div");
+      row.classList.add("history-row");
+      row.dataset.id = c.id;
 
-      btn.addEventListener("click", () => {
-        // highlight selected history item
+      // Label inside row
+      const label = document.createElement("button");
+      label.type = "button";
+      label.classList.add("history-label");
+      label.textContent = c.title || "Untitled chat";
+
+      // Delete button
+      const delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.classList.add("delete-history-btn");
+      delBtn.innerHTML = `<span class="material-icons">delete</span>`;
+      delBtn.title = "Delete conversation";
+
+      // Click anywhere on the row (except trash) to load convo
+      row.addEventListener("click", () => {
         document
-          .querySelectorAll(".history-item")
+          .querySelectorAll(".history-row")
           .forEach((el) => el.classList.remove("active"));
-        btn.classList.add("active");
+        row.classList.add("active");
 
         loadConversation(c.id, c.title);
       });
 
-      list.appendChild(btn);
+      // Clicking trash only deletes, no load
+      delBtn.addEventListener("click", async (e) => {
+        e.stopPropagation(); // don't trigger row click
+
+        const confirmDelete = window.confirm(
+          "Delete this conversation? This action cannot be undone."
+        );
+        if (!confirmDelete) return;
+
+        try {
+          const res = await fetch(
+            `http://localhost:3001/api/conversations/${c.id}`,
+            { method: "DELETE" }
+          );
+          if (!res.ok && res.status !== 204) {
+            throw new Error("Failed to delete conversation");
+          }
+
+          if (CURRENT_CONVERSATION_ID === c.id) {
+            CURRENT_CONVERSATION_ID = null;
+            CHAT_HISTORY.length = 0;
+            const container = document.getElementById("chat-messages");
+            if (container) container.innerHTML = "";
+          }
+
+          loadChatHistory();
+        } catch (err) {
+          console.error("delete conversation error:", err);
+          alert("Sorry, something went wrong deleting this chat.");
+        }
+      });
+
+      row.appendChild(label);
+      row.appendChild(delBtn);
+      list.appendChild(row);
     });
   } catch (err) {
     console.error("loadChatHistory error:", err);

@@ -1,25 +1,29 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
   <head>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>AI Powered Schedule</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
+    <link rel="icon" type="image/png" href="assets/icons/logo.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="style/base.css" />
+
   </head>
 
   <body>
+
+    <!-- FULL CONTENT -->
     <div class="content">
+
       <!-- SIDEBAR -->
       <div class="sidebar" id="sidebar">
-        <!-- App Title -->
+        
+        <!-- APP TITLE -->
         <div class="app-title">
           <span class="material-icons">edit_calendar</span>
           <h2>AI Powered Schedule</h2>
@@ -27,67 +31,71 @@
 
         <hr class="sidebar-divider" />
 
-        <!-- Navigation -->
+        <!-- NAVIGATION BAR -->
         <div class="navbar">
+
+          <!-- SIDEBAR TITLE -->
           <p class="sidebar-title">Main</p>
 
-          <button
-            class="nav-item active"
-            data-page="page-chat"
-            data-title="New Chat"
-          >
+          <!-- NEW CHAT BUTTON -->
+          <button class="nav-item active" data-page="page-chat" data-title="New Chat">
             <span class="material-icons">chat_bubble</span>
             <span>New Chat</span>
           </button>
 
-          <button
-            class="nav-item"
-            data-page="page-schedule"
-            data-title="Weekly Schedule"
-          >
+          <!-- SCHEDULE BUTTON -->
+          <button class="nav-item" data-page="page-schedule" data-title="Weekly Schedule">
             <span class="material-icons">calendar_today</span>
             <span>Schedule</span>
           </button>
+
         </div>
 
         <hr class="sidebar-divider" />
 
-        <!-- Chat History -->
+        <!-- CHAT HISTORY -->
         <div class="chat-history">
+
+          <!-- SIDEBAR TITLE -->
           <p class="sidebar-title">Chat History</p>
 
-          <!-- JS will fill this with buttons -->
+          <!-- CHAT HISTORY LIST (filled by JS) -->
           <div class="chat-history-list"></div>
+
         </div>
 
         <hr class="sidebar-divider" />
 
-        <!-- User Profile -->
+        <!-- USER PROFILE BUTTON -->
         <div class="user-profile">
+
+          <!-- PROFILE BUTTON -->
           <button class="profile-btn" id="profile-btn">
+
             <span class="profile-img">JD</span>
 
             <div class="profile-info">
               <p class="profile-name">Jane Doe</p>
               <p class="profile-username">doej0123</p>
             </div>
+
           </button>
 
+          <!-- PROFILE MENU -->
           <div class="profile-menu" id="profile-menu">
-            <button
-              class="profile-menu-item"
-              data-page="page-profile"
-              data-title="My Profile"
-            >
-              Profile
-            </button>
+
+            <button class="profile-menu-item" data-page="page-profile" data-title="My Profile">Profile</button>
             <button class="profile-menu-item">Sign Out</button>
+
           </div>
+
         </div>
+
       </div>
 
       <!-- MAIN CONTENT -->
       <div class="main-content" id="main-content">
+
         <!-- TOP BAR -->
         <div class="topbar">
           <h1 class="topbar-title" id="topbar-title"></h1>
@@ -95,7 +103,8 @@
 
         <!-- WELCOME PAGE -->
         <section id="page-welcome" class="page active">
-          <!-- Welcome Message -->
+
+          <!-- WELCOME MESSAGE -->
           <div class="welcome-message">
             <span class="material-icons">edit_calendar</span>
 
@@ -105,370 +114,392 @@
             </div>
           </div>
 
-          <!-- Chat Input -->
+          <!-- CHAT INPUT -->
           <div class="chat-input">
+
+            <!-- INPUT BOX -->
             <input type="text" placeholder="Ask anything..." />
 
+            <!-- MIC BUTTON -->
             <button class="mic">
               <span class="material-icons">mic</span>
             </button>
 
-            <button class="send" onclick="sendMessage()">
+            <!-- SEND BUTTON -->
+            <button class="send">
               <span class="material-icons">send</span>
             </button>
+
           </div>
 
-          <!-- Suggested Prompts -->
+          <!-- SUGGESTED PROMPTS -->
           <div class="suggested-prompts" id="suggested-prompts"></div>
+
         </section>
 
         <!-- CHAT PAGE -->
         <section id="page-chat" class="page">
-          <!-- Chat Messages -->
+
+          <!-- CHAT MESSAGES (filled by JS)-->
           <div class="chat-messages" id="chat-messages"></div>
 
-          <!-- Chat Input -->
+          <!-- CHAT INPUT -->
           <div class="chat-input">
+
+            <!-- INPUT BOX -->
             <input type="text" placeholder="Ask a question..." />
 
+            <!-- MIC BUTTON -->
             <button class="mic">
               <span class="material-icons">mic</span>
             </button>
 
+            <!-- SEND BUTTON -->
             <button class="send">
               <span class="material-icons">send</span>
             </button>
+
           </div>
+
         </section>
 
         <!-- SCHEDULE PAGE -->
         <section id="page-schedule" class="page">
-          <!-- Action Bar (Semester Filter & Add Class Button) -->
+
+          <!-- ACTION BAR -->
           <div class="actionbar">
+
+            <!-- SEMESTER FILTER BUTTON -->
             <button class="semester-btn" id="semester-btn">
               <span>Semester</span>
               <span class="material-icons">expand_more</span>
             </button>
 
+            <!-- SEMESTER MENU -->
             <div class="semester-menu" id="semester-menu">
               <button class="semester-menu-item">Fall 2025</button>
               <button class="semester-menu-item">Winter 2026</button>
               <button class="semester-menu-item">Spring 2026</button>
             </div>
 
+            <!-- ADD CLASS BUTTON -->
             <button class="add-btn">
               <span class="material-icons">add</span>
               <span>Add Class</span>
             </button>
           </div>
 
-          <!-- Calendar -->
+          <!-- CALENDAR (filled by JS)-->
           <div class="calendar">
             <div class="calendar-container">
               <div class="calendar-grid" id="calendar-grid"></div>
             </div>
           </div>
 
-          <!-- Courses -->
+          <!-- COURSES -->
           <div class="courses">
             <div class="courses-container">
+
+              <!-- COURSES MAIN TITLE -->
               <h1 class="courses-title" id="courses-title">Courses</h1>
 
-              <!-- Courses List (filled by JS) -->
+              <!-- COURSES LIST (filled by JS) -->
               <div class="courses-list" id="courses-list"></div>
             </div>
           </div>
+
         </section>
 
         <!-- PROFILE PAGE -->
-       <!-- PROFILE PAGE: team profiles -->
-<section id="page-profile" class="page">
-  <div class="profile-layout">
-    <!-- Left side: list of names (tabs) -->
-    <aside class="profile-sidebar">
-      <h2 class="profile-page-title">Profiles</h2>
+        <section id="page-profile" class="page">
+          <div class="profile-layout">
+            <!-- Left side: list of names (tabs) -->
+            <aside class="profile-sidebar">
+              <h2 class="profile-page-title">Profiles</h2>
 
-      <button class="profile-tab active" data-person="nimi">Nimi</button>
-      <button class="profile-tab" data-person="chenilyn">Chenilyn</button>
-      <button class="profile-tab" data-person="dayana">Dayana</button>
-      <button class="profile-tab" data-person="donovan">Donovan</button>
-      <button class="profile-tab" data-person="miguel">Miguel</button>
-    </aside>
+              <button class="profile-tab active" data-person="nimi">Nimi</button>
+              <button class="profile-tab" data-person="chenilyn">Chenilyn</button>
+              <button class="profile-tab" data-person="dayana">Dayana</button>
+              <button class="profile-tab" data-person="donovan">Donovan</button>
+              <button class="profile-tab" data-person="miguel">Miguel</button>
+            </aside>
 
-    <!-- Right side: details for the selected person -->
-    <main class="profile-main">
-      <!-- Nimi -->
-      <div id="profile-person-nimi" class="profile-person active">
-        <div class="profile-card profile-card-main">
-          <div class="profile-header">
-            <div class="profile-avatar">NK</div>
-            <div class="profile-text">
-              <h3 class="profile-name">Nimi Kenanagha</h3>
-              <div class="profile-label">Student ID</div>
-              <div class="profile-value">20250005</div>
-            </div>
-          </div>
-        </div>
+            <!-- Right side: details for the selected person -->
+            <main class="profile-main">
+              <!-- Nimi -->
+              <div id="profile-person-nimi" class="profile-person active">
+                <div class="profile-card profile-card-main">
+                  <div class="profile-header">
+                    <div class="profile-avatar">NK</div>
+                    <div class="profile-text">
+                      <h3 class="profile-name">Nimi Kenanagha</h3>
+                      <div class="profile-label">Student ID</div>
+                      <div class="profile-value">20250005</div>
+                    </div>
+                  </div>
+                </div>
 
-        <div class="profile-card">
-          <div class="profile-section-title">Account</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Email</div>
-              <div class="profile-value">
-                KENANAGHAN0131@students.bowiestate.edu
+                <div class="profile-card">
+                  <div class="profile-section-title">Account</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Email</div>
+                      <div class="profile-value">
+                        KENANAGHAN0131@students.bowiestate.edu
+                      </div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Password</div>
+                      <div class="profile-value">••••••••</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="profile-card">
+                  <div class="profile-section-title">Class Information</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Major</div>
+                      <div class="profile-value">Computer Science</div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Minor</div>
+                      <div class="profile-value">N/A</div>
+                    </div>
+                  </div>
+
+                  <div class="profile-classes">
+                    <div class="profile-label">Classes Taken</div>
+                    <div class="profile-pill-row">
+                      <span class="profile-pill">COSC 101</span>
+                      <span class="profile-pill">COSC 369</span>
+                      <span class="profile-pill">COSC 414</span>
+                      <span class="profile-pill">MATH 141</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              <div class="profile-label">Password</div>
-              <div class="profile-value">••••••••</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="profile-card">
-          <div class="profile-section-title">Class Information</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Major</div>
-              <div class="profile-value">Computer Science</div>
-            </div>
-            <div>
-              <div class="profile-label">Minor</div>
-              <div class="profile-value">N/A</div>
-            </div>
-          </div>
+              <!-- Chenilyn -->
+              <div id="profile-person-chenilyn" class="profile-person">
+                <div class="profile-card profile-card-main">
+                  <div class="profile-header">
+                    <div class="profile-avatar">CE</div>
+                    <div class="profile-text">
+                      <h3 class="profile-name">Chenilyn Joy Espineda</h3>
+                      <div class="profile-label">Student ID</div>
+                      <div class="profile-value">20250001</div>
+                    </div>
+                  </div>
+                </div>
 
-          <div class="profile-classes">
-            <div class="profile-label">Classes Taken</div>
-            <div class="profile-pill-row">
-              <span class="profile-pill">COSC 101</span>
-              <span class="profile-pill">COSC 369</span>
-              <span class="profile-pill">COSC 414</span>
-              <span class="profile-pill">MATH 141</span>
-            </div>
-          </div>
-        </div>
-      </div>
+                <div class="profile-card">
+                  <div class="profile-section-title">Account</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Email</div>
+                      <div class="profile-value">
+                        ESPINEDAC0619@students.bowiestate.edu
+                      </div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Password</div>
+                      <div class="profile-value">••••••••</div>
+                    </div>
+                  </div>
+                </div>
 
-      <!-- Chenilyn -->
-      <div id="profile-person-chenilyn" class="profile-person">
-        <div class="profile-card profile-card-main">
-          <div class="profile-header">
-            <div class="profile-avatar">CE</div>
-            <div class="profile-text">
-              <h3 class="profile-name">Chenilyn Joy Espineda</h3>
-              <div class="profile-label">Student ID</div>
-              <div class="profile-value">20250001</div>
-            </div>
-          </div>
-        </div>
+                <div class="profile-card">
+                  <div class="profile-section-title">Class Information</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Major</div>
+                      <div class="profile-value">Computer Science</div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Minor</div>
+                      <div class="profile-value">N/A</div>
+                    </div>
+                  </div>
 
-        <div class="profile-card">
-          <div class="profile-section-title">Account</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Email</div>
-              <div class="profile-value">
-                ESPINEDAC0619@students.bowiestate.edu
+                  <div class="profile-classes">
+                    <div class="profile-label">Classes Taken</div>
+                    <div class="profile-pill-row">
+                      <span class="profile-pill">COSC 101</span>
+                      <span class="profile-pill">COSC 113</span>
+                      <span class="profile-pill">MATH 141</span>
+                      <span class="profile-pill">ENGL 101</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              <div class="profile-label">Password</div>
-              <div class="profile-value">••••••••</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="profile-card">
-          <div class="profile-section-title">Class Information</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Major</div>
-              <div class="profile-value">Computer Science</div>
-            </div>
-            <div>
-              <div class="profile-label">Minor</div>
-              <div class="profile-value">N/A</div>
-            </div>
-          </div>
+              <!-- Dayana -->
+              <div id="profile-person-dayana" class="profile-person">
+                <div class="profile-card profile-card-main">
+                  <div class="profile-header">
+                    <div class="profile-avatar">DF</div>
+                    <div class="profile-text">
+                      <h3 class="profile-name">Dayana Ferrufino</h3>
+                      <div class="profile-label">Student ID</div>
+                      <div class="profile-value">20250002</div>
+                    </div>
+                  </div>
+                </div>
 
-          <div class="profile-classes">
-            <div class="profile-label">Classes Taken</div>
-            <div class="profile-pill-row">
-              <span class="profile-pill">COSC 101</span>
-              <span class="profile-pill">COSC 113</span>
-              <span class="profile-pill">MATH 141</span>
-              <span class="profile-pill">ENGL 101</span>
-            </div>
-          </div>
-        </div>
-      </div>
+                <div class="profile-card">
+                  <div class="profile-section-title">Account</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Email</div>
+                      <div class="profile-value">
+                        ferrufinod0501@students.bowiestate.edu
+                      </div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Password</div>
+                      <div class="profile-value">••••••••</div>
+                    </div>
+                  </div>
+                </div>
 
-      <!-- Dayana -->
-      <div id="profile-person-dayana" class="profile-person">
-        <div class="profile-card profile-card-main">
-          <div class="profile-header">
-            <div class="profile-avatar">DF</div>
-            <div class="profile-text">
-              <h3 class="profile-name">Dayana Ferrufino</h3>
-              <div class="profile-label">Student ID</div>
-              <div class="profile-value">20250002</div>
-            </div>
-          </div>
-        </div>
+                <div class="profile-card">
+                  <div class="profile-section-title">Class Information</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Major</div>
+                      <div class="profile-value">Computer Science</div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Minor</div>
+                      <div class="profile-value">N/A</div>
+                    </div>
+                  </div>
 
-        <div class="profile-card">
-          <div class="profile-section-title">Account</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Email</div>
-              <div class="profile-value">
-                ferrufinod0501@students.bowiestate.edu
+                  <div class="profile-classes">
+                    <div class="profile-label">Classes Taken</div>
+                    <div class="profile-pill-row">
+                      <span class="profile-pill">COSC 101</span>
+                      <span class="profile-pill">COSC 214</span>
+                      <span class="profile-pill">COSC 254</span>
+                      <span class="profile-pill">MATH 141</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              <div class="profile-label">Password</div>
-              <div class="profile-value">••••••••</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="profile-card">
-          <div class="profile-section-title">Class Information</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Major</div>
-              <div class="profile-value">Computer Science</div>
-            </div>
-            <div>
-              <div class="profile-label">Minor</div>
-              <div class="profile-value">N/A</div>
-            </div>
-          </div>
+              <!-- Donovan -->
+              <div id="profile-person-donovan" class="profile-person">
+                <div class="profile-card profile-card-main">
+                  <div class="profile-header">
+                    <div class="profile-avatar">DF</div>
+                    <div class="profile-text">
+                      <h3 class="profile-name">Donovan Faucette</h3>
+                      <div class="profile-label">Student ID</div>
+                      <div class="profile-value">20250003</div>
+                    </div>
+                  </div>
+                </div>
 
-          <div class="profile-classes">
-            <div class="profile-label">Classes Taken</div>
-            <div class="profile-pill-row">
-              <span class="profile-pill">COSC 101</span>
-              <span class="profile-pill">COSC 214</span>
-              <span class="profile-pill">COSC 254</span>
-              <span class="profile-pill">MATH 141</span>
-            </div>
-          </div>
-        </div>
-      </div>
+                <div class="profile-card">
+                  <div class="profile-section-title">Account</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Email</div>
+                      <div class="profile-value">
+                        faucetted0530@students.bowiestate.edu
+                      </div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Password</div>
+                      <div class="profile-value">••••••••</div>
+                    </div>
+                  </div>
+                </div>
 
-      <!-- Donovan -->
-      <div id="profile-person-donovan" class="profile-person">
-        <div class="profile-card profile-card-main">
-          <div class="profile-header">
-            <div class="profile-avatar">DF</div>
-            <div class="profile-text">
-              <h3 class="profile-name">Donovan Faucette</h3>
-              <div class="profile-label">Student ID</div>
-              <div class="profile-value">20250003</div>
-            </div>
-          </div>
-        </div>
+                <div class="profile-card">
+                  <div class="profile-section-title">Class Information</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Major</div>
+                      <div class="profile-value">Computer Science</div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Minor</div>
+                      <div class="profile-value">N/A</div>
+                    </div>
+                  </div>
 
-        <div class="profile-card">
-          <div class="profile-section-title">Account</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Email</div>
-              <div class="profile-value">
-                faucetted0530@students.bowiestate.edu
+                  <div class="profile-classes">
+                    <div class="profile-label">Classes Taken</div>
+                    <div class="profile-pill-row">
+                      <span class="profile-pill">COSC 101</span>
+                      <span class="profile-pill">COSC 113</span>
+                      <span class="profile-pill">COSC 214</span>
+                      <span class="profile-pill">COSC 369</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              <div class="profile-label">Password</div>
-              <div class="profile-value">••••••••</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="profile-card">
-          <div class="profile-section-title">Class Information</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Major</div>
-              <div class="profile-value">Computer Science</div>
-            </div>
-            <div>
-              <div class="profile-label">Minor</div>
-              <div class="profile-value">N/A</div>
-            </div>
-          </div>
+              <!-- Miguel -->
+              <div id="profile-person-miguel" class="profile-person">
+                <div class="profile-card profile-card-main">
+                  <div class="profile-header">
+                    <div class="profile-avatar">MG</div>
+                    <div class="profile-text">
+                      <h3 class="profile-name">Miguel Gasca-Ortega</h3>
+                      <div class="profile-label">Student ID</div>
+                      <div class="profile-value">20250004</div>
+                    </div>
+                  </div>
+                </div>
 
-          <div class="profile-classes">
-            <div class="profile-label">Classes Taken</div>
-            <div class="profile-pill-row">
-              <span class="profile-pill">COSC 101</span>
-              <span class="profile-pill">COSC 113</span>
-              <span class="profile-pill">COSC 214</span>
-              <span class="profile-pill">COSC 369</span>
-            </div>
-          </div>
-        </div>
-      </div>
+                <div class="profile-card">
+                  <div class="profile-section-title">Account</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Email</div>
+                      <div class="profile-value">
+                        gascaortegam1108@students.bowiestate.edu
+                      </div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Password</div>
+                      <div class="profile-value">••••••••</div>
+                    </div>
+                  </div>
+                </div>
 
-      <!-- Miguel -->
-      <div id="profile-person-miguel" class="profile-person">
-        <div class="profile-card profile-card-main">
-          <div class="profile-header">
-            <div class="profile-avatar">MG</div>
-            <div class="profile-text">
-              <h3 class="profile-name">Miguel Gasca-Ortega</h3>
-              <div class="profile-label">Student ID</div>
-              <div class="profile-value">20250004</div>
-            </div>
-          </div>
-        </div>
+                <div class="profile-card">
+                  <div class="profile-section-title">Class Information</div>
+                  <div class="profile-grid">
+                    <div>
+                      <div class="profile-label">Major</div>
+                      <div class="profile-value">Computer Science</div>
+                    </div>
+                    <div>
+                      <div class="profile-label">Minor</div>
+                      <div class="profile-value">N/A</div>
+                    </div>
+                  </div>
 
-        <div class="profile-card">
-          <div class="profile-section-title">Account</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Email</div>
-              <div class="profile-value">
-                gascaortegam1108@students.bowiestate.edu
+                  <div class="profile-classes">
+                    <div class="profile-label">Classes Taken</div>
+                    <div class="profile-pill-row">
+                      <span class="profile-pill">COSC 101</span>
+                      <span class="profile-pill">COSC 214</span>
+                      <span class="profile-pill">COSC 369</span>
+                      <span class="profile-pill">MATH 155</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div>
-              <div class="profile-label">Password</div>
-              <div class="profile-value">••••••••</div>
-            </div>
+            </main>
           </div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-section-title">Class Information</div>
-          <div class="profile-grid">
-            <div>
-              <div class="profile-label">Major</div>
-              <div class="profile-value">Computer Science</div>
-            </div>
-            <div>
-              <div class="profile-label">Minor</div>
-              <div class="profile-value">N/A</div>
-            </div>
-          </div>
-
-          <div class="profile-classes">
-            <div class="profile-label">Classes Taken</div>
-            <div class="profile-pill-row">
-              <span class="profile-pill">COSC 101</span>
-              <span class="profile-pill">COSC 214</span>
-              <span class="profile-pill">COSC 369</span>
-              <span class="profile-pill">MATH 155</span>
-            </div>
-          </div>
-        </div>
+        </section>
       </div>
-    </main>
-  </div>
-</section>
+    </div>
 
     <!-- Add Course Modal -->
     <div id="add-course-modal" class="modal-hidden">
@@ -517,32 +548,33 @@
       </div>
     </div>
 
-   <script src="src/script.js"></script>
-<script>
-  // Simple tab switching for profiles
-  const profileTabs = document.querySelectorAll('#page-profile .profile-tab');
-  const profilePersons = document.querySelectorAll('#page-profile .profile-person');
+    <script type="module" src="src/script.js"></script>
+    <script>
+      // Simple tab switching for profiles
+      const profileTabs = document.querySelectorAll('#page-profile .profile-tab');
+      const profilePersons = document.querySelectorAll('#page-profile .profile-person');
 
-  profileTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const person = tab.dataset.person;
-      if (!person) return;
+      profileTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const person = tab.dataset.person;
+          if (!person) return;
 
-      // highlight tab
-      profileTabs.forEach((t) => t.classList.remove('active'));
-      tab.classList.add('active');
+          // highlight tab
+          profileTabs.forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
 
-      // show correct person
-      profilePersons.forEach((block) => {
-        block.classList.remove('active');
+          // show correct person
+          profilePersons.forEach((block) => {
+            block.classList.remove('active');
+          });
+          const target = document.getElementById('profile-person-' + person);
+          if (target) {
+            target.classList.add('active');
+          }
+        });
       });
-      const target = document.getElementById('profile-person-' + person);
-      if (target) {
-        target.classList.add('active');
-      }
-    });
-  });
-</script>
-</body>
+    </script>
+
+  </body>
 </html>
 

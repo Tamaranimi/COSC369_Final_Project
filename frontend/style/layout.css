@@ -28,7 +28,7 @@
   margin: 8px 0 8px;
 }
 
-/* APP TITLE */
+/* App Title */
 
 .app-title {
   display: flex;
@@ -47,7 +47,7 @@
   color: var(--text-primary);
 }
 
-/* NAVIGATION */
+/* Navigation */
 
 .navbar {
   display: flex;
@@ -85,7 +85,7 @@
   color: inherit;
 }
 
-/* CHAT HISTORY */
+/* Chat History */
 
 .chat-history {
   flex: 1;
@@ -93,7 +93,7 @@
   padding-right: 6px;
 }
 
-/* CHAT HISTORY BUTTONS */
+/* Chat History Buttons */
 
 .chat-history-list {
   display: flex;
@@ -164,7 +164,7 @@
   padding: 4px 2px;
 }
 
-/* USER PROFILE */
+/* User Profile Button */
 
 .user-profile {
   position: relative;
@@ -265,6 +265,8 @@
   background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
 }
 
+
+
 /* ------------------------------------------------------------------------------------------ */
 /* MAIN CONTENT LAYOUT */
 
@@ -275,6 +277,8 @@
   height: 100vh;
   overflow: hidden;
 }
+
+
 
 /* ------------------------------------------------------------------------------------------ */
 /* TOB BAR LAYOUT */
@@ -300,7 +304,9 @@
   color: var(--text-primary);
 }
 
-/* ------------------------------------------------------------------------ */
+
+
+/* ------------------------------------------------------------------------------------------ */
 /* PAGE LAYOUT */
 
 .page {

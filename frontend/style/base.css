@@ -11,8 +11,6 @@ CSS TABLE OF CONTENTS:
 
 ------------------------------------------------------------------------------------------ */
 
-
-
 /* IMPORTING ALL CSS FILES */
 @import url("./layout.css");
 @import url("./components.css");
@@ -21,60 +19,59 @@ CSS TABLE OF CONTENTS:
 @import url("./pages/chat.css");
 @import url("./pages/schedule.css");
 @import url("./pages/profile.css");
-
-
+@import url("./pages/logo-styles.css");
 
 /* COLORS */
 :root {
-    /* Background colorss */
-    --background-default: #FFFFFF;
-    --background-main: #F9F7FD;
+  /* Background colorss */
+  --background-default: #ffffff;
+  --background-main: #f9f7fd;
 
-    /* Main color palette */
-    --color-primary-default: #874FCE;
-    --color-primary-hover: #733DB5;
-    --color-primary-active: #613693;
-    --color-secondary: #9D6EDE;
-    --color-tertiary: #B996EA;
-    --color-accent-default: #D4BFF3;
-    --color-accent-hover: #F6F2FF;
-    --color-accent-strong: #D8D3E6;
+  /* Main color palette */
+  --color-primary-default: #874fce;
+  --color-primary-hover: #733db5;
+  --color-primary-active: #613693;
+  --color-secondary: #9d6ede;
+  --color-tertiary: #b996ea;
+  --color-accent-default: #d4bff3;
+  --color-accent-hover: #f6f2ff;
+  --color-accent-strong: #d8d3e6;
 
-    /* Danger (errors, critical actions) */
-    --danger-default: #C1367C;
-    --danger-hover: #A72D6B;
-    --danger-active: #8B2558;  
-    --danger-bg: #FCE7F3;    
-    --danger-border: #F9A8D4; 
-    --danger-text: #A72D6B;
+  /* Danger (errors, critical actions) */
+  --danger-default: #c1367c;
+  --danger-hover: #a72d6b;
+  --danger-active: #8b2558;
+  --danger-bg: #fce7f3;
+  --danger-border: #f9a8d4;
+  --danger-text: #a72d6b;
 
-    /* Borders and Dividers */
-    --border-default: #D4BFF3;
-    --border-strong: #B996EA;
-    --divider-default: #E6DBF9;
-    
-    /* Text color palette */
-    --text-primary: #1F1D2B;
-    --text-secondary: #6B7280;
-    --text-accent: #9D6EDE;          
-    --text-on-primary: #FFFFFF;
+  /* Borders and Dividers */
+  --border-default: #d4bff3;
+  --border-strong: #b996ea;
+  --divider-default: #e6dbf9;
 
-    /* Calendar course colors */
+  /* Text color palette */
+  --text-primary: #1f1d2b;
+  --text-secondary: #6b7280;
+  --text-accent: #9d6ede;
+  --text-on-primary: #ffffff;
 
-    /* 1 - Pastel*/
-    --course-color-red:    #F2B7D6; 
-    --course-color-orange: #F2C7B3; 
-    --course-color-yellow: #F2E1B5; 
-    --course-color-green:  #C8E4D6; 
-    --course-color-blue:   #C6D4F5; 
-    --course-color-pink:   #EAC3ED; 
-    --course-color-mint:   #C3E9E6; 
-    --course-color-gray:   #E0DEEE; 
-    --course-color-brown:  #E3CCE3; 
-    --course-color-teal:   #BEDBEA; 
+  /* Calendar course colors */
 
-    /* 2 - OG */
-    /* --course-color-red: #F28A9C;
+  /* 1 - Pastel*/
+  --course-color-red: #f2b7d6;
+  --course-color-orange: #f2c7b3;
+  --course-color-yellow: #f2e1b5;
+  --course-color-green: #c8e4d6;
+  --course-color-blue: #c6d4f5;
+  --course-color-pink: #eac3ed;
+  --course-color-mint: #c3e9e6;
+  --course-color-gray: #e0deee;
+  --course-color-brown: #e3cce3;
+  --course-color-teal: #bedbea;
+
+  /* 2 - OG */
+  /* --course-color-red: #F28A9C;
     --course-color-orange: #F5A86A;
     --course-color-yellow: #F7D774;
     --course-color-green: #88D4A3;
@@ -85,8 +82,8 @@ CSS TABLE OF CONTENTS:
     --course-color-brown: #C99F80;
     --course-color-teal: #6CC4C8; */
 
-    /* 3 - Purple*/
-    /* --course-color-red:   #EEC3E6;
+  /* 3 - Purple*/
+  /* --course-color-red:   #EEC3E6;
     --course-color-orange: #E7C8F0;
     --course-color-yellow: #E0D4F6;
     --course-color-green:  #C9D7F2;
@@ -97,66 +94,57 @@ CSS TABLE OF CONTENTS:
     --course-color-brown:  #D8C6EA;
     --course-color-teal:   #C2D3F0; */
 
-    /* Modal */
-    --modal-background: color-mix(in srgb, #000000 5%, var(--color-primary-default) 2%);
-    --modal-border: #D4BFF3;
-    
-    /* Shadows */
-    --shadow-xs: 
-        0 1px 2px rgba(135, 79, 206, 0.05),
-        0 1px 3px rgba(0, 0, 0, 0.05);
+  /* Modal */
+  --modal-background: color-mix(
+    in srgb,
+    #000000 5%,
+    var(--color-primary-default) 2%
+  );
+  --modal-border: #d4bff3;
 
-    --shadow-sm: 
-        0 2px 4px rgba(135, 79, 206, 0.07),
-        0 2px 6px rgba(0, 0, 0, 0.06);
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(135, 79, 206, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
 
-    --shadow-md: 
-        0 4px 8px rgba(135, 79, 206, 0.12),
-        0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 2px 4px rgba(135, 79, 206, 0.07), 0 2px 6px rgba(0, 0, 0, 0.06);
 
-    --shadow-lg:
-        0 8px 16px rgba(135, 79, 206, 0.18),
-        0 4px 6px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 8px rgba(135, 79, 206, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
 
-    --shadow-xl:
-        0 12px 24px rgba(135, 79, 206, 0.22),
-        0 6px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(135, 79, 206, 0.18),
+    0 4px 6px rgba(0, 0, 0, 0.12);
 
+  --shadow-xl: 0 12px 24px rgba(135, 79, 206, 0.22),
+    0 6px 12px rgba(0, 0, 0, 0.15);
 
-    --shadow-glow:
-        0 0 0 3px rgba(157, 110, 222, 0.40),
-        0 0 12px rgba(157, 110, 222, 0.30);
-        
+  --shadow-glow: 0 0 0 3px rgba(157, 110, 222, 0.4),
+    0 0 12px rgba(157, 110, 222, 0.3);
 }
-
-
 
 /* GLOBAL STYLES */
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center; 
-    justify-content: center;
-    background-color: var(--background-main);
-    font-family: 'Open Sans', sans-serif !important;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-main);
+  font-family: "Open Sans", sans-serif !important;
 }
 
 .content {
-    width: 100vw; 
-    height: 100vh;
-    background: var(--background-main); 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.063); 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: stretch; 
-    text-align: left; 
-    overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background: var(--background-main);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.063);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  text-align: left;
+  overflow: hidden;
 }

@@ -77,6 +77,8 @@ let addCourseForm = null;
 let addCourseInput = null;
 let addCourseClose = null;
 let addCourseCancel = null;
+let addCourseSubmit = null;
+let addCourseError = null;
 
 export function openAddCourseModal() {
   if (!addCourseModal) return;
@@ -91,6 +93,14 @@ function closeAddCourseModal() {
   if (!addCourseModal) return;
   addCourseModal.classList.add("modal-hidden");
   if (addCourseForm) addCourseForm.reset();
+  if (addCourseSubmit) addCourseSubmit.disabled = true;
+
+  if (addCourseError) {
+    addCourseError.classList.add("hidden");
+  }
+  if (addCourseInput) {
+    addCourseInput.classList.remove("modal-field-input-error");
+  }
 }
 
 function setupAddCourseModal() {
@@ -99,7 +109,25 @@ function setupAddCourseModal() {
   addCourseInput = document.getElementById("modal-course-id");
   addCourseClose = document.getElementById("add-course-close");
   addCourseCancel = document.getElementById("add-course-cancel");
+  addCourseSubmit = document.getElementById("add-course-submit");
+  addCourseError = document.getElementById("add-course-error");
   const addClassBtn = document.querySelector(".add-btn");
+
+  if (addCourseSubmit) {
+    addCourseSubmit.disabled = true;
+  }
+
+  if (addCourseInput && addCourseSubmit) {
+    addCourseInput.addEventListener("input", () => {
+      const value = addCourseInput.value.trim();
+      addCourseSubmit.disabled = value.length === 0;
+
+      if (addCourseError && value.length > 0) {
+        addCourseError.classList.add("hidden");
+        addCourseInput.classList.remove("modal-field-input-error");
+      }
+    });
+  }
 
   if (addClassBtn) {
     addClassBtn.addEventListener("click", () => {
@@ -149,15 +177,30 @@ function setupAddCourseModal() {
         const data = await res.json();
 
         if (!res.ok) {
-          alert(data.error || "Failed to add course.");
+          const message = data.error || "Could not find course.";
+          if (addCourseError) {
+            addCourseError.querySelector(".modal-field-error-text").textContent = message;
+            addCourseError.classList.remove("hidden");
+          }
+          if (addCourseInput) {
+            addCourseInput.classList.add("modal-field-input-error");
+          }
           return;
         }
 
         closeAddCourseModal();
         await loadScheduleCourses();
+
       } catch (err) {
         console.error("addCourse error:", err);
         alert("Sorry, something went wrong adding this course.");
+        if (addCourseError) {
+          addCourseError.querySelector(".modal-field-error-text").textContent = fallback;
+          addCourseError.classList.remove("hidden");
+        }
+        if (addCourseInput) {
+          addCourseInput.classList.add("modal-field-input-error");
+        }
       }
     });
   }

@@ -405,7 +405,7 @@
           <div class="modal-header">
 
             <!-- MODAL TITLE -->
-            <h2 id="add-course-title">Add Course</h2>
+            <h2 id="add-course-title">Add</h2>
 
             <!-- CLOSE BUTTON -->
             <button type="button" class="modal-close-btn" id="add-course-close">
@@ -425,6 +425,11 @@
               <label for="modal-course-id" class="modal-label">
                 Course ID
                 <input id="modal-course-id" type="text" placeholder="e.g. ENGR110" autocomplete="off" required/>
+
+                <p id="add-course-error" class="modal-field-error hidden">
+                  <span class="material-icons field-error-icon">error_outline</span>
+                  <span class="modal-field-error-text">Could not find course</span>
+                </p>
               </label>
             </form>
 
@@ -439,7 +444,7 @@
               </button>
 
               <!-- PRIMARY BUTTOn-->
-              <button type="submit" class="modal-btn modal-btn-primary">
+              <button type="submit" class="modal-btn modal-btn-primary" id="add-course-submit" form="add-course-form" disabled>
                 Add Course
               </button>
 

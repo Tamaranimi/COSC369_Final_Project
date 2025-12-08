@@ -227,7 +227,7 @@
 
 .modal-label input.modal-field-input-error {
   border-color: var(--danger-default);
-  background: olor-mix(in srgb, var(--danger-bg) 25%, #ffffff 10%);;
+  background: color-mix(in srgb, var(--danger-bg) 10%, #ffffff 10%);;
 }
 
 .hidden {

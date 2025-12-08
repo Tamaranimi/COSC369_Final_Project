@@ -160,8 +160,13 @@ function setupAddCourseModal() {
   if (addCourseForm && addCourseInput) {
     addCourseForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const courseId = addCourseInput.value.trim();
-      if (!courseId) return;
+      
+      // 1) Take raw input
+      const rawValue = addCourseInput.value.trim();
+      if (!rawValue) return;
+
+      // 2) Force uppercase here
+      const courseId = rawValue.toUpperCase();
 
       try {
         const userId = getCurrentUserId();
@@ -177,31 +182,51 @@ function setupAddCourseModal() {
         const data = await res.json();
 
         if (!res.ok) {
-          const message = data.error || "Could not find course.";
+          let message = "Could not find course.";
+
+          if (data?.error) {
+            // Normalize duplicate-course message
+            if (
+              data.error.toLowerCase().includes("already") ||
+              data.error.toLowerCase().includes("exists")
+            ) {
+              message = "Course already added to your schedule.";
+            } else {
+              message = data.error;
+            }
+          }
+
           if (addCourseError) {
             addCourseError.querySelector(".modal-field-error-text").textContent = message;
             addCourseError.classList.remove("hidden");
           }
+
           if (addCourseInput) {
             addCourseInput.classList.add("modal-field-input-error");
           }
+
           return;
         }
+
 
         closeAddCourseModal();
         await loadScheduleCourses();
 
       } catch (err) {
-        console.error("addCourse error:", err);
-        alert("Sorry, something went wrong adding this course.");
-        if (addCourseError) {
-          addCourseError.querySelector(".modal-field-error-text").textContent = fallback;
-          addCourseError.classList.remove("hidden");
+          console.error("addCourse error:", err);
+          const fallback = "Sorry, something went wrong adding this course.";
+
+          if (addCourseError) {
+            addCourseError
+              .querySelector(".modal-field-error-text")
+              .textContent = fallback;
+            addCourseError.classList.remove("hidden");
+          }
+
+          if (addCourseInput) {
+            addCourseInput.classList.add("modal-field-input-error");
+          }
         }
-        if (addCourseInput) {
-          addCourseInput.classList.add("modal-field-input-error");
-        }
-      }
     });
   }
 }

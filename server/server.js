@@ -396,14 +396,35 @@ app.post("/api/schedule/drop", async (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
+// AUTH: Helper function to generate unique 7-digit student ID
+// -----------------------------------------------------------------------------
+async function generateUniqueStudentId() {
+  let studentId;
+  let exists = true;
+
+  while (exists) {
+    // Generate random 7-digit number (1000000 - 9999999)
+    studentId = Math.floor(1000000 + Math.random() * 9000000).toString();
+
+    // Check if this ID already exists
+    const existingUser = await User.findOne({ studentId });
+    exists = !!existingUser;
+  }
+
+  return studentId;
+}
+
+// -----------------------------------------------------------------------------
 // AUTH: Sign up
 // -----------------------------------------------------------------------------
 app.post("/api/auth/signup", async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, major, minor } = req.body;
 
-    if (!firstName || !lastName || !email || !password) {
-      return res.status(400).json({ error: "All fields are required." });
+    if (!firstName || !lastName || !email || !password || !major) {
+      return res
+        .status(400)
+        .json({ error: "All required fields must be filled." });
     }
 
     const normalizedEmail = email.toLowerCase().trim();
@@ -417,10 +438,16 @@ app.post("/api/auth/signup", async (req, res) => {
 
     const hashed = await bcrypt.hash(password, 10);
 
+    // Generate unique student ID
+    const studentId = await generateUniqueStudentId();
+
     const user = await User.create({
       email: normalizedEmail,
       password: hashed,
       name: `${firstName} ${lastName}`.trim(),
+      studentId: studentId,
+      major: major,
+      minor: minor || null,
     });
 
     // Optionally create an empty schedule for this user
@@ -435,6 +462,9 @@ app.post("/api/auth/signup", async (req, res) => {
         id: user._id.toString(),
         name: user.name,
         email: user.email,
+        studentId: user.studentId,
+        major: user.major,
+        minor: user.minor,
       },
     });
   } catch (err) {
@@ -442,7 +472,6 @@ app.post("/api/auth/signup", async (req, res) => {
     return res.status(500).json({ error: "Failed to create account." });
   }
 });
-
 // -----------------------------------------------------------------------------
 // AUTH: Log in
 // -----------------------------------------------------------------------------
@@ -480,6 +509,9 @@ app.post("/api/auth/login", async (req, res) => {
         id: user._id.toString(),
         name: user.name,
         email: user.email,
+        studentId: user.studentId,
+        major: user.major,
+        minor: user.minor,
       },
     });
   } catch (err) {
@@ -630,10 +662,17 @@ mongoose
 
     if (!demoUser) {
       const hashed = await bcrypt.hash("password", 10);
+
+      // Generate a student ID for demo user
+      const demoStudentId = "1000000"; // Fixed ID for demo user
+
       demoUser = await User.create({
         email: "demo@chat.com",
         password: hashed,
         name: "Demo User",
+        studentId: demoStudentId,
+        major: "Computer Science",
+        minor: null,
       });
       console.log("Created demo user:", demoUser._id.toString());
     }

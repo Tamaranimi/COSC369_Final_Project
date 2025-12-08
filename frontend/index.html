@@ -46,20 +46,20 @@
               <!-- FIRST NAME -->
               <label class="form-label">
                 First Name
-                <input type="text" required />
+                <input type="text" id="signup-firstname" required />
               </label>
 
               <!-- LAST NAME -->
               <label class="form-label">
                 Last Name
-                <input type="text" required />
+                <input type="text" id="signup-lastname" required />
               </label>
             </div>
 
             <!-- EMAIL FEILD -->
             <label class="form-label">
               Email
-              <input type="email" required />
+              <input type="email" id="signup-email" required />
             </label>
 
             <!-- PASSWORD FEILD -->
@@ -81,6 +81,64 @@
                   <span class="material-icons">visibility_off</span>
                 </button>
               </div>
+            </label>
+
+            <!-- MAJOR FIELD -->
+            <label class="form-label">
+              Major
+              <select id="signup-major" required>
+                <option value="">Select your major</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Business Administration">
+                  Business Administration
+                </option>
+                <option value="Psychology">Psychology</option>
+                <option value="Biology">Biology</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Physics">Physics</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="English">English</option>
+                <option value="History">History</option>
+                <option value="Political Science">Political Science</option>
+                <option value="Economics">Economics</option>
+                <option value="Sociology">Sociology</option>
+                <option value="Communication">Communication</option>
+                <option value="Art">Art</option>
+                <option value="Music">Music</option>
+                <option value="Nursing">Nursing</option>
+                <option value="Education">Education</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+
+            <!-- MINOR FIELD -->
+            <label class="form-label">
+              Minor (Optional)
+              <select id="signup-minor">
+                <option value="">None</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Business Administration">
+                  Business Administration
+                </option>
+                <option value="Psychology">Psychology</option>
+                <option value="Biology">Biology</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Physics">Physics</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="English">English</option>
+                <option value="History">History</option>
+                <option value="Political Science">Political Science</option>
+                <option value="Economics">Economics</option>
+                <option value="Sociology">Sociology</option>
+                <option value="Communication">Communication</option>
+                <option value="Art">Art</option>
+                <option value="Music">Music</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Statistics">Statistics</option>
+                <option value="Philosophy">Philosophy</option>
+              </select>
             </label>
 
             <!-- CREATE ACCOUNT BUTTON -->

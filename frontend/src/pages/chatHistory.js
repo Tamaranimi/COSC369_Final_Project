@@ -58,43 +58,51 @@ export async function loadChatHistory({
         });
       });
 
-      delBtn.addEventListener("click", async (e) => {
+      delBtn.addEventListener("click", (e) => {
         e.stopPropagation();
 
-        if (!confirm("Delete this conversation?")) return;
+        openDeleteConvoModal(
+          c.id,
+          c.title || "Untitled chat",
+          async (conversationId) => {
+            try {
+              const userId = getCurrentUserId();
+              const query = userId
+                ? `?userId=${encodeURIComponent(userId)}`
+                : "";
 
-        try {
-          const userId = getCurrentUserId();
-          const query = userId ? `?userId=${encodeURIComponent(userId)}` : "";
+              const res = await fetch(
+                `http://localhost:3001/api/conversations/${conversationId}${query}`,
+                { method: "DELETE" }
+              );
 
-          const res = await fetch(
-            `http://localhost:3001/api/conversations/${c.id}${query}`,
-            { method: "DELETE" }
-          );
+              if (!res.ok && res.status !== 204) {
+                throw new Error("Failed to delete conversation");
+              }
 
-          if (!res.ok && res.status !== 204) {
-            throw new Error("Failed to delete conversation");
+              // If we just deleted the active conversation, clear chat UI + state
+              if (getCurrentConversationId() === conversationId) {
+                setCurrentConversationId(null);
+                const history = getChatHistory();
+                history.length = 0;
+                const msgs = document.getElementById("chat-messages");
+                if (msgs) msgs.innerHTML = "";
+              }
+
+              // Reload history after delete
+              loadChatHistory({
+                addMessage,
+                showPage,
+                getChatHistory,
+                getCurrentConversationId,
+                setCurrentConversationId,
+              });
+            } catch (err) {
+              console.error("delete conversation error:", err);
+              alert("Sorry, something went wrong deleting this chat.");
+            }
           }
-
-          if (getCurrentConversationId() === c.id) {
-            setCurrentConversationId(null);
-            getChatHistory().length = 0;
-            const msgs = document.getElementById("chat-messages");
-            if (msgs) msgs.innerHTML = "";
-          }
-
-          // Reload history after delete
-          loadChatHistory({
-            addMessage,
-            showPage,
-            getChatHistory,
-            getCurrentConversationId,
-            setCurrentConversationId,
-          });
-        } catch (err) {
-          console.error("delete conversation error:", err);
-          alert("Sorry, something went wrong deleting this chat.");
-        }
+        );
       });
 
       row.append(label, delBtn);
@@ -151,5 +159,74 @@ export async function loadConversation(
     });
   } catch (err) {
     console.error("loadConversation error:", err);
+  }
+}
+
+/* ------------------------------------------------------------------------------------------
+/* DELETE CONVERSATION SETUP */
+let deleteConvoModal = null;
+let deleteConvoMessage = null;
+let deleteConvoClose = null;
+let deleteConvoCancel = null;
+let deleteConvoConfirm = null;
+let deleteConvoCurrentId = null;
+let deleteConvoOnConfirm = null;
+
+function openDeleteConvoModal(conversationId, title, onConfirm) {
+  if (!deleteConvoModal) return;
+  deleteConvoCurrentId = conversationId;
+  deleteConvoOnConfirm = onConfirm || null;
+  const convoTitle = title || "this conversation";
+  if (deleteConvoMessage) {
+    deleteConvoMessage.innerHTML = `Are you sure you want to delete <strong>'${convoTitle}'</strong>?`;
+  }
+  deleteConvoModal.classList.remove("modal-hidden");
+}
+
+function closeDeleteConvoModal() {
+  deleteConvoCurrentId = null;
+  deleteConvoOnConfirm = null;
+  if (deleteConvoModal) {
+    deleteConvoModal.classList.add("modal-hidden");
+  }
+}
+
+export function setupDeleteConvoModal() {
+  deleteConvoModal = document.getElementById("delete-convo-modal");
+  if (!deleteConvoModal) return;
+
+  deleteConvoMessage = document.getElementById("delete-convo-message");
+  deleteConvoClose = document.getElementById("delete-convo-close");
+  deleteConvoCancel = document.getElementById("delete-convo-cancel");
+  deleteConvoConfirm = document.getElementById("delete-convo-confirm");
+
+  // Close (X)
+  if (deleteConvoClose) {
+    deleteConvoClose.addEventListener("click", closeDeleteConvoModal);
+  }
+
+  // Cancel button
+  if (deleteConvoCancel) {
+    deleteConvoCancel.addEventListener("click", closeDeleteConvoModal);
+  }
+
+  // Click on backdrop closes modal
+  deleteConvoModal.addEventListener("click", (e) => {
+    if (
+      e.target === deleteConvoModal ||
+      e.target.classList.contains("modal-backdrop")
+    ) {
+      closeDeleteConvoModal();
+    }
+  });
+
+  // Confirm delete
+  if (deleteConvoConfirm) {
+    deleteConvoConfirm.addEventListener("click", async () => {
+      if (deleteConvoOnConfirm && deleteConvoCurrentId) {
+        await deleteConvoOnConfirm(deleteConvoCurrentId);
+      }
+      closeDeleteConvoModal();
+    });
   }
 }

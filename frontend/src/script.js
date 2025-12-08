@@ -13,30 +13,37 @@ JS TABLE OF CONTENTS:
 
 ------------------------------------------------------------------------------------------ */
 
-
-
 /* IMPORTING ALL JS FILES */
 import { showPage, setupNavigation, setupUserMenu } from "./ui.js";
 import { setupWelcomePage } from "./pages/welcome.js";
-import { loadChatHistory, setupDeleteConvoModal} from "./pages/chatHistory.js";
-import { sendMessage, startVoiceRecognition, addMessage, getChatHistory, getCurrentConversationId, setCurrentConversationId, setupChatInputHandlers, resetChatState, setupNewChatView } from "./pages/chat.js";
-import { SchedulePage as setupSchedulePage, loadScheduleCourses } from "./pages/schedule.js";
+import { loadChatHistory, setupDeleteConvoModal } from "./pages/chatHistory.js";
+import {
+  sendMessage,
+  startVoiceRecognition,
+  addMessage,
+  getChatHistory,
+  getCurrentConversationId,
+  setCurrentConversationId,
+  setupChatInputHandlers,
+  resetChatState,
+  setupNewChatView,
+} from "./pages/chat.js";
+import {
+  SchedulePage as setupSchedulePage,
+  loadScheduleCourses,
+} from "./pages/schedule.js";
 import { setupAuth } from "./pages/authentication.js";
-
-
 
 /* ------------------------------------------------------------------------------------------
 /* INITIALIZING APP */
 
 document.addEventListener("DOMContentLoaded", () => {
-
   setupAuth();
 
   window.showAppPage = showPage;
 
   setupNavigation({
     onNewChat: () => {
-
       resetChatState();
 
       setupNewChatView();

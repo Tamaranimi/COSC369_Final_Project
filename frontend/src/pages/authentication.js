@@ -86,6 +86,9 @@ export function logout() {
   setCurrentUser(null);
   setSessionPassword(null);
 
+  // Clear all page content
+  clearAllPageData();
+
   // Flip UI back to auth
   const authContainer = document.getElementById("auth");
   const appContent = document.getElementById("app-content");
@@ -96,6 +99,51 @@ export function logout() {
   // Close profile dropdown if it's open
   const profileMenu = document.getElementById("profile-menu");
   if (profileMenu) profileMenu.classList.remove("open");
+}
+
+function clearAllPageData() {
+  // Clear chat messages
+  const chatMessages = document.getElementById("chat-messages");
+  if (chatMessages) chatMessages.innerHTML = "";
+
+  // Clear chat history sidebar
+  const chatHistoryList = document.querySelector(".chat-history-list");
+  if (chatHistoryList) chatHistoryList.innerHTML = "";
+
+  // Clear profile data
+  const profileName = document.getElementById("profile-name");
+  const profileEmail = document.getElementById("profile-email");
+  const profileAvatar = document.getElementById("profile-avatar");
+  const profileStudentId = document.getElementById("profile-student-id");
+  const profileMajor = document.getElementById("profile-major");
+  const profileMinor = document.getElementById("profile-minor");
+  const profileClasses = document.getElementById("profile-classes");
+  const profilePassword = document.getElementById("profile-password");
+
+  if (profileName) profileName.textContent = "Loading...";
+  if (profileEmail) profileEmail.textContent = "Loading...";
+  if (profileAvatar) profileAvatar.textContent = "??";
+  if (profileStudentId) profileStudentId.textContent = "N/A";
+  if (profileMajor) profileMajor.textContent = "N/A";
+  if (profileMinor) profileMinor.textContent = "N/A";
+  if (profileClasses) profileClasses.innerHTML = "";
+  if (profilePassword) profilePassword.textContent = "********";
+
+  // Clear schedule page
+  const coursesList = document.getElementById("courses-list");
+  if (coursesList) coursesList.innerHTML = "";
+
+  // Reset to welcome page
+  const pages = document.querySelectorAll(".page");
+  pages.forEach((page) => page.classList.remove("active"));
+  const welcomePage = document.getElementById("page-welcome");
+  if (welcomePage) welcomePage.classList.add("active");
+
+  // Reset navigation
+  const navItems = document.querySelectorAll(".nav-item");
+  navItems.forEach((item) => item.classList.remove("active"));
+  const chatNav = document.querySelector('.nav-item[data-page="page-chat"]');
+  if (chatNav) chatNav.classList.add("active");
 }
 
 /* ------------------------------------------------------------------------------------------
@@ -208,23 +256,45 @@ export function setupAuth(onAuthComplete) {
     authContainer.style.display = "none";
     appContent.classList.remove("hidden");
 
+    // Force refresh all pages with new user data
+    refreshAllPages();
+
     // normal login / signup
     if (typeof onAuthComplete === "function") {
       onAuthComplete(user);
     }
   }
 
+  function refreshAllPages() {
+    // Trigger profile page to load new user data
+    document.dispatchEvent(new Event("show-profile-page"));
+
+    // Reset to welcome page
+    const pages = document.querySelectorAll(".page");
+    pages.forEach((page) => page.classList.remove("active"));
+    const welcomePage = document.getElementById("page-welcome");
+    if (welcomePage) welcomePage.classList.add("active");
+
+    // Hide topbar on welcome page
+    const topbar = document.querySelector(".topbar");
+    if (topbar) topbar.classList.add("hidden");
+
+    // Reset navigation to "New Chat"
+    const navItems = document.querySelectorAll(".nav-item");
+    navItems.forEach((item) => item.classList.remove("active"));
+    const chatNav = document.querySelector('.nav-item[data-page="page-chat"]');
+    if (chatNav) chatNav.classList.add("active");
+  }
+
   // SIGN UP
   const createForm = signupSection.querySelector("#create-form");
   if (createForm) {
-    const firstNameInput = signupSection.querySelector(
-      ".name-field .form-label:nth-child(1) input"
-    );
-    const lastNameInput = signupSection.querySelector(
-      ".name-field .form-label:nth-child(2) input"
-    );
-    const emailInput = signupSection.querySelector('input[type="email"]');
-    const passwordInput = signupSection.querySelector("#signup-password");
+    const firstNameInput = document.getElementById("signup-firstname");
+    const lastNameInput = document.getElementById("signup-lastname");
+    const emailInput = document.getElementById("signup-email");
+    const passwordInput = document.getElementById("signup-password");
+    const majorSelect = document.getElementById("signup-major");
+    const minorSelect = document.getElementById("signup-minor");
 
     createForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -235,8 +305,22 @@ export function setupAuth(onAuthComplete) {
       const lastName = lastNameInput.value.trim();
       const email = emailInput.value.trim();
       const password = passwordInput.value;
+      const major = majorSelect.value;
+      const minor = minorSelect.value || null;
 
-      if (!firstName || !lastName || !email || !password) return;
+      console.log("Signup data:", {
+        firstName,
+        lastName,
+        email,
+        password,
+        major,
+        minor,
+      });
+
+      if (!firstName || !lastName || !email || !password || !major) {
+        showError("signup-error", "All required fields must be filled.");
+        return;
+      }
 
       // Clear any previous errors
       hideError("signup-error");
@@ -245,10 +329,19 @@ export function setupAuth(onAuthComplete) {
         const res = await fetch("http://localhost:3001/api/auth/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ firstName, lastName, email, password }),
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+            major,
+            minor,
+          }),
         });
 
         const data = await res.json();
+        console.log("Server response:", data);
+
         if (!res.ok) {
           showError("signup-error", data.error || "Failed to create account.");
           return;

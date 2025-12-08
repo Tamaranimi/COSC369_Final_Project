@@ -11,12 +11,28 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true, // plain text not hashed
+      required: true,
     },
 
     name: {
       type: String,
       default: "User",
+    },
+
+    studentId: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+
+    major: {
+      type: String,
+      default: "Computer Science",
+    },
+
+    minor: {
+      type: String,
+      default: null,
     },
   },
   { timestamps: true }

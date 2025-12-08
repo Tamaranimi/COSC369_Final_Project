@@ -28,8 +28,7 @@
   margin: 8px 0 8px;
 }
 
-/* APP TITLE */
-
+/* App Title */
 .app-title {
   display: flex;
   align-items: center;
@@ -47,8 +46,7 @@
   color: var(--text-primary);
 }
 
-/* NAVIGATION */
-
+/* Navigation */
 .navbar {
   display: flex;
   flex-direction: column;
@@ -75,7 +73,7 @@
 }
 
 .nav-item.active {
-  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  background: color-mix(in srgb, var(--color-accent-default) 20%, transparent);
   color: var(--text-accent);
   font-weight: 600;
 }
@@ -85,22 +83,19 @@
   color: inherit;
 }
 
-/* CHAT HISTORY */
-
+/* Chat History */
 .chat-history {
   flex: 1;
   overflow-y: auto;
   padding-right: 6px;
 }
 
-/* CHAT HISTORY BUTTONS */
 
 .chat-history-list {
   display: flex;
   flex-direction: column;
 }
 
-/* Entire row is the hover area */
 .history-row {
   display: flex;
   align-items: center;
@@ -116,10 +111,9 @@
 }
 
 .history-row.active {
-  background: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  background: color-mix(in srgb, var(--color-accent-default) 20%, transparent);
 }
 
-/* Text label inside row */
 .history-label {
   flex: 1;
   background: none;
@@ -136,7 +130,6 @@
   font-weight: 600;
 }
 
-/* Trash icon */
 .delete-history-btn {
   border: none;
   background: transparent;
@@ -153,19 +146,25 @@
   color: color-mix(in srgb, var(--text-secondary) 70%, transparent);
 }
 
-/* When row hovered, icon also feels "inside" hover */
 .history-row:hover .delete-history-btn .material-icons {
   color: var(--danger-hover);
 }
 
+/* Delete Conversation Modal */
+#delete-convo-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+/* Empty Chat History */
 .empty-history {
   font-size: 12px;
   color: color-mix(in srgb, var(--text-secondary) 70%, transparent);
   padding: 4px 2px;
 }
 
-/* USER PROFILE */
-
+/* User Profile Button */
 .user-profile {
   position: relative;
   margin-bottom: 15px;
@@ -265,6 +264,8 @@
   background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
 }
 
+
+
 /* ------------------------------------------------------------------------------------------ */
 /* MAIN CONTENT LAYOUT */
 
@@ -275,6 +276,8 @@
   height: 100vh;
   overflow: hidden;
 }
+
+
 
 /* ------------------------------------------------------------------------------------------ */
 /* TOB BAR LAYOUT */
@@ -300,7 +303,9 @@
   color: var(--text-primary);
 }
 
-/* ------------------------------------------------------------------------ */
+
+
+/* ------------------------------------------------------------------------------------------ */
 /* PAGE LAYOUT */
 
 .page {

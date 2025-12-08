@@ -1,0 +1,36 @@
+/* ------------------------------------------------------------------------------------------ */
+/* LOGO ICON STYLING */
+
+/* Base logo icon styling */
+img.logo-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Large logo icon (for welcome page) */
+img.logo-icon-large {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Auth page logo */
+.auth-logo img.logo-icon {
+  width: auto;
+  height: 25px;
+}
+
+/* Sidebar app title logo */
+.app-title img.logo-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* Welcome page logo */
+#page-welcome img.logo-icon-large {
+  width: 120px;
+  height: 120px;
+}

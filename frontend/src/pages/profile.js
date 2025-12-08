@@ -1,5 +1,3 @@
-console.log("=== PROFILE.JS LOADED - VERSION 3 ===");
-
 import { getCurrentUser, getCurrentUserPassword } from "./authentication.js";
 
 let currentEditField = null;

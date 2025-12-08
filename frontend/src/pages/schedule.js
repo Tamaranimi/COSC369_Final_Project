@@ -551,6 +551,9 @@ export async function loadScheduleCourses() {
         openDropCourseModal(courseId);
       });
     });
+
+    renderCoursesOnCalendar(classes);
+    
   } catch (err) {
     console.error("loadScheduleCourses error:", err);
     container.innerHTML =

@@ -7,12 +7,18 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+
 import Conversation from "./models/conversation.model.js";
 import User from "./models/user.model.js";
 import Course from "./models/course.model.js";
 import StudentSchedule from "./models/studentSchedule.model.js";
 
 const DEMO_USER_ID = "demo-student-001";
+
+function getUserIdFromRequest(req) {
+  return req.body.userId || req.query.userId || DEMO_USER_ID;
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,28 +42,22 @@ app.get("/", (req, res) => {
 });
 
 // Chat route
+// Chat route
 app.post("/api/chat", async (req, res) => {
   try {
-    const { message, history, conversationId } = req.body;
-
-    if (!message || typeof message !== "string") {
-      return res.status(400).json({ error: "Message is required." });
+    const { message, history, conversationId, userId } = req.body;
+    if (!userId) {
+      return res.status(401).json({ error: "userId required" });
     }
 
-    // ------------------------------------------------------------
-    // 1) Find or create conversation (scoped to user)
-    // ------------------------------------------------------------
-    let convo = null;
+    const effectiveUserId = userId; // no more demo fallback
 
+    let convo = null;
     if (conversationId) {
-      try {
-        convo = await Conversation.findOne({
-          _id: conversationId,
-          userId: DEMO_USER_ID,
-        });
-      } catch {
-        // ignore invalid id
-      }
+      convo = await Conversation.findOne({
+        _id: conversationId,
+        userId: effectiveUserId,
+      });
     }
 
     if (!convo) {
@@ -67,7 +67,7 @@ app.post("/api/chat", async (req, res) => {
           : message || "New Chat";
 
       convo = new Conversation({
-        userId: DEMO_USER_ID, // SET OWNER THIS IS SET TO ALWAYS DUMMY USER
+        userId: effectiveUserId,
         title: shortTitle,
         messages: [],
       });
@@ -81,7 +81,7 @@ app.post("/api/chat", async (req, res) => {
 
     // Load this student's schedule from Mongo
     const currentSchedule = await StudentSchedule.findOne({
-      userId: DEMO_USER_ID,
+      userId: effectiveUserId,
       semester: "Fall 2025", // TODO: make this dynamic
     }).lean();
 
@@ -194,84 +194,71 @@ USER: ${message}
 // Get list of conversations (for sidebar history)
 // -----------------------------------------------------------------------------
 app.get("/api/conversations", async (req, res) => {
-  try {
-    const convos = await Conversation.find(
-      { userId: DEMO_USER_ID },
-      "title updatedAt"
-    )
-      .sort({ updatedAt: -1 })
-      .lean();
+  const userId = req.query.userId;
+  if (!userId) return res.status(401).json({ error: "userId required" });
 
-    res.json(
-      convos.map((c) => ({
-        id: c._id.toString(),
-        title: c.title,
-        updatedAt: c.updatedAt,
-      }))
-    );
-  } catch (err) {
-    console.error("Error in GET /api/conversations:", err);
-    res.status(500).json({ error: "Failed to fetch conversations" });
-  }
+  const convos = await Conversation.find({ userId }, "title updatedAt")
+    .sort({ updatedAt: -1 })
+    .lean();
+
+  res.json(
+    convos.map((c) => ({
+      id: c._id.toString(),
+      title: c.title,
+      updatedAt: c.updatedAt,
+    }))
+  );
 });
 
 // -----------------------------------------------------------------------------
 // Get a single conversation's messages
 // -----------------------------------------------------------------------------
 app.get("/api/conversations/:id", async (req, res) => {
-  try {
-    const convo = await Conversation.findOne({
-      _id: req.params.id,
-      userId: DEMO_USER_ID,
-    });
+  const userId = req.query.userId;
+  if (!userId) return res.status(401).json({ error: "userId required" });
 
-    if (!convo) {
-      return res.status(404).json({ error: "Conversation not found" });
-    }
+  const convo = await Conversation.findOne({
+    _id: req.params.id,
+    userId,
+  });
+  if (!convo) return res.status(404).json({ error: "Conversation not found" });
 
-    res.json({
-      id: convo._id.toString(),
-      title: convo.title,
-      messages: convo.messages,
-    });
-  } catch (err) {
-    console.error("Error in GET /api/conversations/:id:", err);
-    res.status(500).json({ error: "Failed to fetch conversation" });
-  }
+  res.json({
+    id: convo._id.toString(),
+    title: convo.title,
+    messages: convo.messages,
+  });
 });
 
 // -----------------------------------------------------------------------------
 // Delete a conversation
 // -----------------------------------------------------------------------------
+
 app.delete("/api/conversations/:id", async (req, res) => {
-  try {
-    const deleted = await Conversation.findOneAndDelete({
-      _id: req.params.id,
-      userId: DEMO_USER_ID,
-    });
+  const userId = req.query.userId;
+  if (!userId) return res.status(401).json({ error: "userId required" });
 
-    if (!deleted) {
-      return res.status(404).json({ error: "Conversation not found" });
-    }
+  const deleted = await Conversation.findOneAndDelete({
+    _id: req.params.id,
+    userId,
+  });
 
-    res.status(204).send();
-  } catch (err) {
-    console.error("Error deleting conversation:", err);
-    res.status(500).json({ error: "Failed to delete conversation" });
-  }
+  if (!deleted)
+    return res.status(404).json({ error: "Conversation not found" });
+  res.status(204).send();
 });
-
 // -----------------------------------------------------------------------------
 // Get the current student's schedule (with full course details)
 // -----------------------------------------------------------------------------
 app.get("/api/schedule", async (req, res) => {
   try {
-    // For now we use the dummy user; later this becomes req.user.id
+    const effectiveUserId = req.query.userId || DEMO_USER_ID;
+
     const classesCatalog = await Course.find({}).lean();
 
     const currentSchedule = await StudentSchedule.findOne({
-      userId: DEMO_USER_ID,
-      semester: "Fall 2025", // later: make dynamic from query / UI
+      userId: effectiveUserId,
+      semester: "Fall 2025",
     }).lean();
 
     let enrolledCourses = [];
@@ -296,21 +283,21 @@ app.get("/api/schedule", async (req, res) => {
 // -----------------------------------------------------------------------------
 app.post("/api/schedule/add", async (req, res) => {
   try {
-    const { courseId, semester = "Fall 2025" } = req.body;
+    const { courseId, semester = "Fall 2025", userId } = req.body;
+    const effectiveUserId = userId || DEMO_USER_ID;
 
     if (!courseId) {
       return res.status(400).json({ error: "courseId is required" });
     }
 
-    // Make sure this course exists in the catalog
     const course = await Course.findOne({ id: courseId });
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
 
     const schedule = await StudentSchedule.findOneAndUpdate(
-      { userId: DEMO_USER_ID, semester },
-      { $addToSet: { classes: courseId } }, // avoid duplicates
+      { userId: effectiveUserId, semester },
+      { $addToSet: { classes: courseId } },
       { new: true, upsert: true }
     );
 
@@ -326,14 +313,15 @@ app.post("/api/schedule/add", async (req, res) => {
 // -----------------------------------------------------------------------------
 app.post("/api/schedule/drop", async (req, res) => {
   try {
-    const { courseId, semester = "Fall 2025" } = req.body;
+    const { courseId, semester = "Fall 2025", userId } = req.body;
+    const effectiveUserId = userId || DEMO_USER_ID;
 
     if (!courseId) {
       return res.status(400).json({ error: "courseId is required" });
     }
 
     const schedule = await StudentSchedule.findOneAndUpdate(
-      { userId: DEMO_USER_ID, semester },
+      { userId: effectiveUserId, semester },
       { $pull: { classes: courseId } },
       { new: true }
     );
@@ -342,6 +330,99 @@ app.post("/api/schedule/drop", async (req, res) => {
   } catch (err) {
     console.error("Error in POST /api/schedule/drop:", err);
     res.status(500).json({ error: "Failed to drop course" });
+  }
+});
+
+// -----------------------------------------------------------------------------
+// AUTH: Sign up
+// -----------------------------------------------------------------------------
+app.post("/api/auth/signup", async (req, res) => {
+  try {
+    const { firstName, lastName, email, password } = req.body;
+
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({ error: "All fields are required." });
+    }
+
+    const normalizedEmail = email.toLowerCase().trim();
+
+    const existing = await User.findOne({ email: normalizedEmail });
+    if (existing) {
+      return res
+        .status(409)
+        .json({ error: "An account with this email already exists." });
+    }
+
+    const hashed = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      email: normalizedEmail,
+      password: hashed,
+      name: `${firstName} ${lastName}`.trim(),
+    });
+
+    // Optionally create an empty schedule for this user
+    await StudentSchedule.create({
+      userId: user._id.toString(),
+      semester: "Fall 2025",
+      classes: [],
+    });
+
+    return res.json({
+      user: {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    console.error("Error in /api/auth/signup:", err);
+    return res.status(500).json({ error: "Failed to create account." });
+  }
+});
+
+// -----------------------------------------------------------------------------
+// AUTH: Log in
+// -----------------------------------------------------------------------------
+app.post("/api/auth/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ error: "Email and password are required." });
+    }
+
+    const normalizedEmail = email.toLowerCase().trim();
+    const user = await User.findOne({ email: normalizedEmail });
+
+    if (!user) {
+      return res.status(401).json({ error: "Invalid email or password." });
+    }
+
+    // Support both hashed & (older) plain text passwords
+    let passwordMatches = false;
+    if (user.password.startsWith("$2a$") || user.password.startsWith("$2b$")) {
+      passwordMatches = await bcrypt.compare(password, user.password);
+    } else {
+      // legacy plain-text (only if you already had some test users)
+      passwordMatches = password === user.password;
+    }
+
+    if (!passwordMatches) {
+      return res.status(401).json({ error: "Invalid email or password." });
+    }
+
+    return res.json({
+      user: {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    console.error("Error in /api/auth/login:", err);
+    return res.status(500).json({ error: "Failed to log in." });
   }
 });
 
@@ -364,9 +445,10 @@ mongoose
     let demoUser = await User.findOne({ email: "demo@chat.com" });
 
     if (!demoUser) {
+      const hashed = await bcrypt.hash("password", 10);
       demoUser = await User.create({
         email: "demo@chat.com",
-        password: "password",
+        password: hashed,
         name: "Demo User",
       });
       console.log("Created demo user:", demoUser._id.toString());

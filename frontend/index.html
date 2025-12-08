@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
   <head>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>AI Powered Schedule</title>
-    <link rel="icon" type="image/png" href="assets/icons/logo.png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="icon" type="image/png" href="assets/icons/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
     <link rel="stylesheet" href="style/base.css" />
-
   </head>
 
   <body>
-
     <div id="auth">
       <div class="auth-container">
-
         <div class="auth-logo">
           <span class="material-icons">edit_calendar</span>
           <h2>AI Powered Schedule</h2>
@@ -27,13 +28,10 @@
 
         <!-- CREATE ACCOUNT -->
         <section class="auth-section" id="auth-signup">
-
           <span class="auth-title" id="auth-title">Create your account</span>
 
           <form id="create-form">
-
             <div class="name-field">
-
               <label class="form-label">
                 First Name
                 <input type="text" required />
@@ -43,7 +41,6 @@
                 Last Name
                 <input type="text" required />
               </label>
-              
             </div>
 
             <label class="form-label">
@@ -54,33 +51,43 @@
             <label class="form-label">
               Password
               <div class="password-field">
-                <input type="password" class="password-input" id="signup-password" required/>
-                <button type="button" class="password-toggle" aria-label="Show password" aria-pressed="false">
+                <input
+                  type="password"
+                  class="password-input"
+                  id="signup-password"
+                  required
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  aria-label="Show password"
+                  aria-pressed="false"
+                >
                   <span class="material-icons">visibility_off</span>
                 </button>
               </div>
             </label>
 
-            <button type="submit" class="auth-btn">
-              Create Account
-            </button>
+            <button type="submit" class="auth-btn">Create Account</button>
 
             <p class="auth-helper">
               Already have an account?
-              <button type="button" class="auth-inline-link" data-switch="login">Log in</button>
+              <button
+                type="button"
+                class="auth-inline-link"
+                data-switch="login"
+              >
+                Log in
+              </button>
             </p>
-
           </form>
-
         </section>
 
         <!-- LOGIN -->
         <section class="auth-section active" id="auth-login">
-
           <span class="auth-title" id="auth-title">Welcome back</span>
 
           <form id="login-form">
-
             <label class="form-label">
               Email
               <input type="email" required />
@@ -89,36 +96,44 @@
             <label class="form-label">
               Password
               <div class="password-field">
-                <input type="password" class="password-input" id="login-password" required/>
-                <button type="button" class="password-toggle" aria-label="Show password" aria-pressed="false">
+                <input
+                  type="password"
+                  class="password-input"
+                  id="login-password"
+                  required
+                />
+                <button
+                  type="button"
+                  class="password-toggle"
+                  aria-label="Show password"
+                  aria-pressed="false"
+                >
                   <span class="material-icons">visibility_off</span>
                 </button>
               </div>
             </label>
 
-            <button type="submit" class="auth-btn">
-              Log In
-            </button>
+            <button type="submit" class="auth-btn">Log In</button>
 
             <p class="auth-helper">
               Don't have an account?
-              <button type="button" class="auth-inline-link" data-switch="signup">Sign Up</button>
+              <button
+                type="button"
+                class="auth-inline-link"
+                data-switch="signup"
+              >
+                Sign Up
+              </button>
             </p>
-
           </form>
-
         </section>
-
       </div>
     </div>
 
-
     <!-- FULL APP CONTENT -->
     <div class="content hidden" id="app-content">
-
       <!-- SIDEBAR -->
       <div class="sidebar" id="sidebar">
-        
         <!-- APP TITLE -->
         <div class="app-title">
           <span class="material-icons">edit_calendar</span>
@@ -129,69 +144,71 @@
 
         <!-- NAVIGATION BAR -->
         <div class="navbar">
-
           <!-- SIDEBAR TITLE -->
           <p class="sidebar-title">Main</p>
 
           <!-- NEW CHAT BUTTON -->
-          <button class="nav-item active" data-page="page-chat" data-title="New Chat">
+          <button
+            class="nav-item active"
+            data-page="page-chat"
+            data-title="New Chat"
+          >
             <span class="material-icons">chat_bubble</span>
             <span>New Chat</span>
           </button>
 
           <!-- SCHEDULE BUTTON -->
-          <button class="nav-item" data-page="page-schedule" data-title="Weekly Schedule">
+          <button
+            class="nav-item"
+            data-page="page-schedule"
+            data-title="Weekly Schedule"
+          >
             <span class="material-icons">calendar_today</span>
             <span>Schedule</span>
           </button>
-
         </div>
 
         <hr class="sidebar-divider" />
 
         <!-- CHAT HISTORY -->
         <div class="chat-history">
-
           <!-- SIDEBAR TITLE -->
           <p class="sidebar-title">Chat History</p>
 
           <!-- CHAT HISTORY LIST (filled by JS) -->
           <div class="chat-history-list"></div>
-
         </div>
 
         <hr class="sidebar-divider" />
 
         <!-- USER PROFILE BUTTON -->
         <div class="user-profile">
-
           <!-- PROFILE BUTTON -->
           <button class="profile-btn" id="profile-btn">
-
             <span class="profile-img">JD</span>
 
             <div class="profile-info">
               <p class="profile-name">Jane Doe</p>
               <p class="profile-username">doej0123</p>
             </div>
-
           </button>
 
           <!-- PROFILE MENU -->
           <div class="profile-menu" id="profile-menu">
-
-            <button class="profile-menu-item" data-page="page-profile" data-title="My Profile">Profile</button>
+            <button
+              class="profile-menu-item"
+              data-page="page-profile"
+              data-title="My Profile"
+            >
+              Profile
+            </button>
             <button class="profile-menu-item">Sign Out</button>
-
           </div>
-
         </div>
-
       </div>
 
       <!-- MAIN CONTENT -->
       <div class="main-content" id="main-content">
-
         <!-- TOP BAR -->
         <div class="topbar">
           <h1 class="topbar-title" id="topbar-title"></h1>
@@ -199,7 +216,6 @@
 
         <!-- WELCOME PAGE -->
         <section id="page-welcome" class="page active">
-
           <!-- WELCOME MESSAGE -->
           <div class="welcome-message">
             <span class="material-icons">edit_calendar</span>
@@ -212,7 +228,6 @@
 
           <!-- CHAT INPUT -->
           <div class="chat-input">
-
             <!-- INPUT BOX -->
             <input type="text" placeholder="Ask anything..." />
 
@@ -225,22 +240,17 @@
             <button class="send">
               <span class="material-icons">send</span>
             </button>
-
           </div>
 
           <!-- SUGGESTED PROMPTS -->
           <div class="suggested-prompts" id="suggested-prompts"></div>
-
         </section>
 
         <!-- CHAT PAGE -->
         <section id="page-chat" class="page">
-
           <div class="chat-body">
-
             <!-- CHAT MESSAGES (filled by JS)-->
             <div class="chat-messages" id="chat-messages"></div>
-
           </div>
 
           <!-- SUGGESTED PROMPTS -->
@@ -248,7 +258,6 @@
 
           <!-- CHAT INPUT -->
           <div class="chat-input">
-
             <!-- INPUT BOX -->
             <input type="text" placeholder="Ask a question..." />
 
@@ -261,17 +270,13 @@
             <button class="send">
               <span class="material-icons">send</span>
             </button>
-
           </div>
-
         </section>
 
         <!-- SCHEDULE PAGE -->
         <section id="page-schedule" class="page">
-
           <!-- ACTION BAR -->
           <div class="actionbar">
-
             <!-- SEMESTER FILTER BUTTON -->
             <button class="semester-btn" id="semester-btn">
               <span>Semester</span>
@@ -302,7 +307,6 @@
           <!-- COURSES -->
           <div class="courses">
             <div class="courses-container">
-
               <!-- COURSES MAIN TITLE -->
               <h1 class="courses-title" id="courses-title">Courses</h1>
 
@@ -310,291 +314,59 @@
               <div class="courses-list" id="courses-list"></div>
             </div>
           </div>
-
         </section>
 
         <!-- PROFILE PAGE -->
         <section id="page-profile" class="page">
           <div class="profile-layout">
-            <!-- Left side: list of names (tabs) -->
-            <aside class="profile-sidebar">
-              <h2 class="profile-page-title">Profiles</h2>
-
-              <button class="profile-tab active" data-person="nimi">Nimi</button>
-              <button class="profile-tab" data-person="chenilyn">Chenilyn</button>
-              <button class="profile-tab" data-person="dayana">Dayana</button>
-              <button class="profile-tab" data-person="donovan">Donovan</button>
-              <button class="profile-tab" data-person="miguel">Miguel</button>
-            </aside>
-
-            <!-- Right side: details for the selected person -->
             <main class="profile-main">
-              <!-- Nimi -->
-              <div id="profile-person-nimi" class="profile-person active">
-                <div class="profile-card profile-card-main">
-                  <div class="profile-header">
-                    <div class="profile-avatar">NK</div>
-                    <div class="profile-text">
-                      <h3 class="profile-name">Nimi Kenanagha</h3>
-                      <div class="profile-label">Student ID</div>
-                      <div class="profile-value">20250005</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="profile-card">
-                  <div class="profile-section-title">Account</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Email</div>
-                      <div class="profile-value">
-                        KENANAGHAN0131@students.bowiestate.edu
-                      </div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Password</div>
-                      <div class="profile-value">••••••••</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="profile-card">
-                  <div class="profile-section-title">Class Information</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Major</div>
-                      <div class="profile-value">Computer Science</div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Minor</div>
-                      <div class="profile-value">N/A</div>
-                    </div>
-                  </div>
-
-                  <div class="profile-classes">
-                    <div class="profile-label">Classes Taken</div>
-                    <div class="profile-pill-row">
-                      <span class="profile-pill">COSC 101</span>
-                      <span class="profile-pill">COSC 369</span>
-                      <span class="profile-pill">COSC 414</span>
-                      <span class="profile-pill">MATH 141</span>
-                    </div>
+              <!-- MAIN PROFILE CARD -->
+              <div class="profile-card profile-card-main">
+                <div class="profile-header">
+                  <div class="profile-avatar" id="profile-avatar">??</div>
+                  <div class="profile-text">
+                    <h3 class="profile-name" id="profile-name">Loading...</h3>
+                    <div class="profile-label">Student ID</div>
+                    <div class="profile-value" id="profile-student-id">N/A</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Chenilyn -->
-              <div id="profile-person-chenilyn" class="profile-person">
-                <div class="profile-card profile-card-main">
-                  <div class="profile-header">
-                    <div class="profile-avatar">CE</div>
-                    <div class="profile-text">
-                      <h3 class="profile-name">Chenilyn Joy Espineda</h3>
-                      <div class="profile-label">Student ID</div>
-                      <div class="profile-value">20250001</div>
+              <!-- ACCOUNT CARD -->
+              <div class="profile-card">
+                <div class="profile-section-title">Account</div>
+                <div class="profile-grid">
+                  <div>
+                    <div class="profile-label">Email</div>
+                    <div class="profile-value" id="profile-email">
+                      Loading...
                     </div>
                   </div>
-                </div>
-
-                <div class="profile-card">
-                  <div class="profile-section-title">Account</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Email</div>
-                      <div class="profile-value">
-                        ESPINEDAC0619@students.bowiestate.edu
-                      </div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Password</div>
-                      <div class="profile-value">••••••••</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="profile-card">
-                  <div class="profile-section-title">Class Information</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Major</div>
-                      <div class="profile-value">Computer Science</div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Minor</div>
-                      <div class="profile-value">N/A</div>
-                    </div>
-                  </div>
-
-                  <div class="profile-classes">
-                    <div class="profile-label">Classes Taken</div>
-                    <div class="profile-pill-row">
-                      <span class="profile-pill">COSC 101</span>
-                      <span class="profile-pill">COSC 113</span>
-                      <span class="profile-pill">MATH 141</span>
-                      <span class="profile-pill">ENGL 101</span>
-                    </div>
+                  <div>
+                    <div class="profile-label">Password</div>
+                    <div class="profile-value">********</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Dayana -->
-              <div id="profile-person-dayana" class="profile-person">
-                <div class="profile-card profile-card-main">
-                  <div class="profile-header">
-                    <div class="profile-avatar">DF</div>
-                    <div class="profile-text">
-                      <h3 class="profile-name">Dayana Ferrufino</h3>
-                      <div class="profile-label">Student ID</div>
-                      <div class="profile-value">20250002</div>
-                    </div>
+              <!-- CLASS INFORMATION CARD -->
+              <div class="profile-card">
+                <div class="profile-section-title">Class Information</div>
+                <div class="profile-grid">
+                  <div>
+                    <div class="profile-label">Major</div>
+                    <div class="profile-value" id="profile-major">N/A</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Minor</div>
+                    <div class="profile-value" id="profile-minor">N/A</div>
                   </div>
                 </div>
 
-                <div class="profile-card">
-                  <div class="profile-section-title">Account</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Email</div>
-                      <div class="profile-value">
-                        ferrufinod0501@students.bowiestate.edu
-                      </div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Password</div>
-                      <div class="profile-value">••••••••</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="profile-card">
-                  <div class="profile-section-title">Class Information</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Major</div>
-                      <div class="profile-value">Computer Science</div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Minor</div>
-                      <div class="profile-value">N/A</div>
-                    </div>
-                  </div>
-
-                  <div class="profile-classes">
-                    <div class="profile-label">Classes Taken</div>
-                    <div class="profile-pill-row">
-                      <span class="profile-pill">COSC 101</span>
-                      <span class="profile-pill">COSC 214</span>
-                      <span class="profile-pill">COSC 254</span>
-                      <span class="profile-pill">MATH 141</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Donovan -->
-              <div id="profile-person-donovan" class="profile-person">
-                <div class="profile-card profile-card-main">
-                  <div class="profile-header">
-                    <div class="profile-avatar">DF</div>
-                    <div class="profile-text">
-                      <h3 class="profile-name">Donovan Faucette</h3>
-                      <div class="profile-label">Student ID</div>
-                      <div class="profile-value">20250003</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="profile-card">
-                  <div class="profile-section-title">Account</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Email</div>
-                      <div class="profile-value">
-                        faucetted0530@students.bowiestate.edu
-                      </div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Password</div>
-                      <div class="profile-value">••••••••</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="profile-card">
-                  <div class="profile-section-title">Class Information</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Major</div>
-                      <div class="profile-value">Computer Science</div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Minor</div>
-                      <div class="profile-value">N/A</div>
-                    </div>
-                  </div>
-
-                  <div class="profile-classes">
-                    <div class="profile-label">Classes Taken</div>
-                    <div class="profile-pill-row">
-                      <span class="profile-pill">COSC 101</span>
-                      <span class="profile-pill">COSC 113</span>
-                      <span class="profile-pill">COSC 214</span>
-                      <span class="profile-pill">COSC 369</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Miguel -->
-              <div id="profile-person-miguel" class="profile-person">
-                <div class="profile-card profile-card-main">
-                  <div class="profile-header">
-                    <div class="profile-avatar">MG</div>
-                    <div class="profile-text">
-                      <h3 class="profile-name">Miguel Gasca-Ortega</h3>
-                      <div class="profile-label">Student ID</div>
-                      <div class="profile-value">20250004</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="profile-card">
-                  <div class="profile-section-title">Account</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Email</div>
-                      <div class="profile-value">
-                        gascaortegam1108@students.bowiestate.edu
-                      </div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Password</div>
-                      <div class="profile-value">••••••••</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="profile-card">
-                  <div class="profile-section-title">Class Information</div>
-                  <div class="profile-grid">
-                    <div>
-                      <div class="profile-label">Major</div>
-                      <div class="profile-value">Computer Science</div>
-                    </div>
-                    <div>
-                      <div class="profile-label">Minor</div>
-                      <div class="profile-value">N/A</div>
-                    </div>
-                  </div>
-
-                  <div class="profile-classes">
-                    <div class="profile-label">Classes Taken</div>
-                    <div class="profile-pill-row">
-                      <span class="profile-pill">COSC 101</span>
-                      <span class="profile-pill">COSC 214</span>
-                      <span class="profile-pill">COSC 369</span>
-                      <span class="profile-pill">MATH 155</span>
-                    </div>
+                <div class="profile-classes">
+                  <div class="profile-label">Classes Taken</div>
+                  <div class="profile-pill-row" id="profile-classes">
+                    <!-- Pills added dynamically -->
                   </div>
                 </div>
               </div>
@@ -653,15 +425,21 @@
 
     <!-- DROP COURSE MODAL -->
     <div id="drop-course-modal" class="modal-hidden">
-      
       <div class="modal-backdrop">
-
-        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="drop-course-title">
-
+        <div
+          class="modal-dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="drop-course-title"
+        >
           <div class="modal-header">
             <h2 id="drop-course-title">Drop Course?</h2>
 
-            <button type="button" class="modal-close-btn" id="drop-course-close">
+            <button
+              type="button"
+              class="modal-close-btn"
+              id="drop-course-close"
+            >
               <span class="material-icons">close</span>
             </button>
           </div>
@@ -671,32 +449,43 @@
           </div>
 
           <div class="modal-actions">
-            <button type="button" class="modal-btn modal-btn-secondary" id="drop-course-cancel">
+            <button
+              type="button"
+              class="modal-btn modal-btn-secondary"
+              id="drop-course-cancel"
+            >
               Cancel
             </button>
 
-            <button type="button" class="modal-btn modal-btn-primary" id="drop-course-confirm">
+            <button
+              type="button"
+              class="modal-btn modal-btn-primary"
+              id="drop-course-confirm"
+            >
               Drop
             </button>
           </div>
-
         </div>
-
       </div>
-
     </div>
 
     <!-- DELETE CONVERSATION MODAL -->
     <div id="delete-convo-modal" class="modal-hidden">
-      
       <div class="modal-backdrop">
-
-        <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="delete-convo-title">
-
+        <div
+          class="modal-dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delete-convo-title"
+        >
           <div class="modal-header">
-            <h2 id="delete-convo-title">Detele Conversation?</h2>
+            <h2 id="delete-convo-title">Delete Conversation?</h2>
 
-            <button type="button" class="modal-close-btn" id="delete-convo-close">
+            <button
+              type="button"
+              class="modal-close-btn"
+              id="delete-convo-close"
+            >
               <span class="material-icons">close</span>
             </button>
           </div>
@@ -706,49 +495,55 @@
           </div>
 
           <div class="modal-actions">
-            <button type="button" class="modal-btn modal-btn-secondary" id="delete-convo-cancel">
+            <button
+              type="button"
+              class="modal-btn modal-btn-secondary"
+              id="delete-convo-cancel"
+            >
               Cancel
             </button>
 
-            <button type="button" class="modal-btn modal-btn-primary" id="delete-convo-confirm">
+            <button
+              type="button"
+              class="modal-btn modal-btn-primary"
+              id="delete-convo-confirm"
+            >
               Delete
             </button>
           </div>
-
         </div>
-
       </div>
-
     </div>
-
 
     <script type="module" src="src/script.js"></script>
     <script>
       // Simple tab switching for profiles
-      const profileTabs = document.querySelectorAll('#page-profile .profile-tab');
-      const profilePersons = document.querySelectorAll('#page-profile .profile-person');
+      const profileTabs = document.querySelectorAll(
+        "#page-profile .profile-tab"
+      );
+      const profilePersons = document.querySelectorAll(
+        "#page-profile .profile-person"
+      );
 
       profileTabs.forEach((tab) => {
-        tab.addEventListener('click', () => {
+        tab.addEventListener("click", () => {
           const person = tab.dataset.person;
           if (!person) return;
 
           // highlight tab
-          profileTabs.forEach((t) => t.classList.remove('active'));
-          tab.classList.add('active');
+          profileTabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
 
           // show correct person
           profilePersons.forEach((block) => {
-            block.classList.remove('active');
+            block.classList.remove("active");
           });
-          const target = document.getElementById('profile-person-' + person);
+          const target = document.getElementById("profile-person-" + person);
           if (target) {
-            target.classList.add('active');
+            target.classList.add("active");
           }
         });
       });
     </script>
-
   </body>
 </html>
-

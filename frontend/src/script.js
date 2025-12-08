@@ -13,30 +13,47 @@ JS TABLE OF CONTENTS:
 
 ------------------------------------------------------------------------------------------ */
 
-
-
 /* IMPORTING ALL JS FILES */
 import { showPage, setupNavigation, setupUserMenu } from "./ui.js";
 import { setupWelcomePage } from "./pages/welcome.js";
-import { loadChatHistory, setupDeleteConvoModal} from "./pages/chatHistory.js";
-import { sendMessage, startVoiceRecognition, addMessage, getChatHistory, getCurrentConversationId, setCurrentConversationId, setupChatInputHandlers, resetChatState, setupNewChatView } from "./pages/chat.js";
-import { SchedulePage as setupSchedulePage, loadScheduleCourses } from "./pages/schedule.js";
+import { loadChatHistory, setupDeleteConvoModal } from "./pages/chatHistory.js";
+import {
+  sendMessage,
+  startVoiceRecognition,
+  addMessage,
+  getChatHistory,
+  getCurrentConversationId,
+  setCurrentConversationId,
+  setupChatInputHandlers,
+  resetChatState,
+  setupNewChatView,
+} from "./pages/chat.js";
+import {
+  SchedulePage as setupSchedulePage,
+  loadScheduleCourses,
+} from "./pages/schedule.js";
 import { setupAuth } from "./pages/authentication.js";
-
-
+import { setupProfilePage } from "./pages/profile.js";
 
 /* ------------------------------------------------------------------------------------------
 /* INITIALIZING APP */
 
 document.addEventListener("DOMContentLoaded", () => {
-
-  setupAuth();
+  setupAuth(() => {
+    // run this ONLY after the user is authenticated
+    loadChatHistory({
+      addMessage,
+      showPage,
+      getChatHistory,
+      getCurrentConversationId,
+      setCurrentConversationId,
+    });
+  });
 
   window.showAppPage = showPage;
 
   setupNavigation({
     onNewChat: () => {
-
       resetChatState();
 
       setupNewChatView();
@@ -44,10 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
     onSchedulePage: () => {
       loadScheduleCourses();
     },
+    onProfilePage: () => {
+      showPage("page-profile", "My Profile");
+    },
   });
 
   setupDeleteConvoModal();
   setupUserMenu();
+
+  setupProfilePage();
 
   setupSchedulePage();
 
@@ -58,12 +80,4 @@ document.addEventListener("DOMContentLoaded", () => {
   setupChatInputHandlers();
 
   showPage("page-welcome", "Welcome");
-
-  loadChatHistory({
-    addMessage,
-    showPage,
-    getChatHistory,
-    getCurrentConversationId,
-    setCurrentConversationId,
-  });
 });

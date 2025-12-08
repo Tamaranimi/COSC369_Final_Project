@@ -67,6 +67,22 @@ function applyUserToUI(user) {
   }
 }
 
+export function logout() {
+  // Clear stored user
+  setCurrentUser(null);
+
+  // Flip UI back to auth
+  const authContainer = document.getElementById("auth");
+  const appContent = document.getElementById("app-content");
+
+  if (authContainer) authContainer.style.display = "flex";
+  if (appContent) appContent.classList.add("hidden");
+
+  // Close profile dropdown if it's open
+  const profileMenu = document.getElementById("profile-menu");
+  if (profileMenu) profileMenu.classList.remove("open");
+}
+
 /* ------------------------------------------------------------------------------------------
 /* AUTHENTICATION SETUP
 ------------------------------------------------------------------------------------------ */
@@ -80,6 +96,16 @@ export function setupAuth() {
 
   if (!authContainer || !appContent || !signupSection || !loginSection) {
     return;
+  }
+
+  // 🔗 HOOK SIGN OUT BUTTON (this menu is in the sidebar)
+  const signOutBtn = document.querySelector(
+    "#profile-menu .profile-menu-item:last-child"
+  );
+  if (signOutBtn) {
+    signOutBtn.addEventListener("click", () => {
+      logout();
+    });
   }
 
   // If we already have a stored user, skip auth screens
@@ -132,21 +158,9 @@ export function setupAuth() {
     });
   });
 
-  function completeAuth(user) {
-    if (user) {
-      setCurrentUser(user);
-      applyUserToUI(user);
-    }
-    authContainer.style.display = "none";
-    appContent.classList.remove("hidden");
-  }
-
-  const createForm = document.getElementById("create-form");
-  const loginForm = document.getElementById("login-form");
-
   // SIGN UP
+  const createForm = signupSection.querySelector("#create-form");
   if (createForm) {
-    // scope queries to the signup section so we don't grab login inputs by accident
     const firstNameInput = signupSection.querySelector(
       ".name-field .form-label:nth-child(1) input"
     );
@@ -158,9 +172,8 @@ export function setupAuth() {
 
     createForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (!firstNameInput || !lastNameInput || !emailInput || !passwordInput) {
+      if (!firstNameInput || !lastNameInput || !emailInput || !passwordInput)
         return;
-      }
 
       const firstName = firstNameInput.value.trim();
       const lastName = lastNameInput.value.trim();
@@ -191,6 +204,7 @@ export function setupAuth() {
   }
 
   // LOGIN
+  const loginForm = loginSection.querySelector("#login-form");
   if (loginForm) {
     const loginEmail = loginSection.querySelector('input[type="email"]');
     const loginPassword = loginSection.querySelector("#login-password");
@@ -223,5 +237,15 @@ export function setupAuth() {
         alert("Sorry, something went wrong logging you in.");
       }
     });
+  }
+
+  function completeAuth(user) {
+    if (user) {
+      setCurrentUser(user);
+      applyUserToUI(user);
+    }
+
+    authContainer.style.display = "none";
+    appContent.classList.remove("hidden");
   }
 }

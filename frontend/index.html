@@ -181,66 +181,8 @@
         </section>
 
         <!-- PROFILE PAGE -->
-<section id="page-profile" class="page">
-  <div class="profile-layout">
-    <!-- Top: Avatar + Name + Student ID -->
-    <div class="profile-card profile-card-main">
-      <div class="profile-header">
-        <div class="profile-avatar">JD</div>
-
-        <div class="profile-text">
-          <h2 class="profile-name">Jane Doe</h2>
-          <div class="profile-label">Student ID</div>
-          <div class="profile-value">doej0123</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Account -->
-    <div class="profile-card">
-      <div class="profile-section-title">Account</div>
-
-      <div class="profile-grid">
-        <div>
-          <div class="profile-label">Email</div>
-          <div class="profile-value">jane.doe@example.edu</div>
-        </div>
-
-        <div>
-          <div class="profile-label">Password</div>
-          <div class="profile-value">••••••••</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Class Information -->
-    <div class="profile-card">
-      <div class="profile-section-title">Class Information</div>
-
-      <div class="profile-grid">
-        <div>
-          <div class="profile-label">Major</div>
-          <div class="profile-value">Computer Science</div>
-        </div>
-
-        <div>
-          <div class="profile-label">Minor</div>
-          <div class="profile-value">Mathematics</div>
-        </div>
-      </div>
-
-      <div class="profile-classes">
-        <div class="profile-label">Classes Taken</div>
-        <div class="profile-pill-row">
-          <span class="profile-pill">COSC 101</span>
-          <span class="profile-pill">COSC 201</span>
-          <span class="profile-pill">MATH 141</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+        <section id="page-profile" class="page">
+          <p>This is where profile info will go.</p>
         </section>
       </div>
     </div>
@@ -292,6 +234,32 @@
       </div>
     </div>
 
-    <script src="src/script.js"></script>
-  </body>
+   <script src="src/script.js"></script>
+<script>
+  // Simple tab switching for profiles
+  const profileTabs = document.querySelectorAll('#page-profile .profile-tab');
+  const profilePersons = document.querySelectorAll('#page-profile .profile-person');
+
+  profileTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const person = tab.dataset.person;
+      if (!person) return;
+
+      // highlight tab
+      profileTabs.forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // show correct person
+      profilePersons.forEach((block) => {
+        block.classList.remove('active');
+      });
+      const target = document.getElementById('profile-person-' + person);
+      if (target) {
+        target.classList.add('active');
+      }
+    });
+  });
+</script>
+</body>
 </html>
+

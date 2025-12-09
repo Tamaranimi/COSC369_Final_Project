@@ -72,6 +72,7 @@ function setupEditModals() {
   const textModal = document.getElementById("edit-profile-modal");
   const textForm = document.getElementById("edit-profile-form");
   const textInput = document.getElementById("edit-profile-input");
+  const textSelect = document.getElementById("edit-profile-select");
   const textLabel = document.getElementById("edit-profile-label");
   const textTitle = document.getElementById("edit-profile-title");
   const textClose = document.getElementById("edit-profile-close");
@@ -180,6 +181,11 @@ function setupEditModals() {
           textTitle.textContent = `Edit ${fieldNames[field]}`;
           textLabel.textContent = fieldNames[field];
 
+          // CRITICAL FIX: Remove required from hidden select to prevent validation error
+          if (textSelect) {
+            textSelect.removeAttribute("required");
+          }
+
           if (field === "password") {
             textInput.type = "password";
             textInput.value = "";
@@ -201,12 +207,20 @@ function setupEditModals() {
     textClose.addEventListener("click", () => {
       textModal.classList.add("modal-hidden");
       textForm.reset();
+      // Restore required on select when closing
+      if (textSelect) {
+        textSelect.setAttribute("required", "required");
+      }
     });
 
   if (textCancel)
     textCancel.addEventListener("click", () => {
       textModal.classList.add("modal-hidden");
       textForm.reset();
+      // Restore required on select when closing
+      if (textSelect) {
+        textSelect.setAttribute("required", "required");
+      }
     });
 
   textModal?.addEventListener("click", (e) => {
@@ -216,6 +230,10 @@ function setupEditModals() {
     ) {
       textModal.classList.add("modal-hidden");
       textForm.reset();
+      // Restore required on select when closing
+      if (textSelect) {
+        textSelect.setAttribute("required", "required");
+      }
     }
   });
 
@@ -261,6 +279,10 @@ function setupEditModals() {
 
     textModal.classList.add("modal-hidden");
     textForm.reset();
+    // Restore required on select after submit
+    if (textSelect) {
+      textSelect.setAttribute("required", "required");
+    }
   });
 
   // Form submit for dropdown modal
